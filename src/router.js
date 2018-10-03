@@ -73,110 +73,34 @@ export const constantRouterMap = [
     {
         path: '/user',
         component: Layout,
+        redirect: '/user/index',
+        name: 'user_home',
+        meta: { title: '用户管理', icon: 'icon-fenleiorguangchangorqitatianchong' },
         children: [
             {
                 path: 'index',
                 name: 'user_index',
                 component: () => import('@/views/user/index'),
-                meta: { title: '用户管理', icon: 'icon-xinfengtianchong' }
-            }
-        ]
-    },
-
-
-    // demo 
-
-    {
-        path: '/example',
-        component: Layout,
-        redirect: '/example/table',
-        name: 'Example',
-        // meta: { title: 'Example', icon: 'example' },
-        meta: { title: 'Example', icon: 'icon-fenleiorguangchangorqitatianchong' },
-        children: [
-            {
-                path: 'table',
-                name: 'Table',
-                component: () => import('@/views/table/index'),
-                meta: { title: 'Table', icon: 'icon-shoujitianchong' }
+                meta: { title: '用户信息', icon: 'icon-xinfengtianchong' }
             },
             {
-                path: 'tree',
-                name: 'Tree',
-                component: () => import('@/views/tree/index'),
-                // meta: { title: 'Tree', icon: 'tree' }
-                meta: { title: 'Tree', icon: 'icon-gengduotianchong' }
+                path: 'log',
+                name: 'user_log',
+                component: () => import('@/views/user/log'),
+                meta: { title: '用户日志', icon: 'icon-xinfengtianchong' }
             }
         ]
     },
 
     {
-        path: '/form',
+        path: '/platform',
         component: Layout,
         children: [
             {
                 path: 'index',
-                name: 'Form',
-                component: () => import('@/views/form/index'),
-                meta: { title: 'Form', icon: 'icon-xinfengtianchong' }
-            }
-        ]
-    },
-
-    {
-        path: '/nested',
-        component: Layout,
-        redirect: '/nested/menu1',
-        name: 'nested',
-        meta: {
-            title: 'nested',
-            icon: 'icon-wenbenbianjitianchong'
-        },
-        children: [
-            {
-                path: 'menu1',
-                component: () => import('@/views/nested/menu1/index'), // Parent router-view
-                name: 'menu1',
-                meta: { title: 'menu1' },
-                children: [
-                    {
-                        path: 'menu1-1',
-                        component: () => import('@/views/nested/menu1/menu1-1'),
-                        name: 'menu1-1',
-                        meta: { title: 'menu1-1' }
-                    },
-                    {
-                        path: 'menu1-2',
-                        component: () => import('@/views/nested/menu1/menu1-2'),
-                        name: 'menu1-2',
-                        meta: { title: 'menu1-2' },
-                        children: [
-                            {
-                                path: 'menu1-2-1',
-                                component: () => import('@/views/nested/menu1/menu1-2/menu1-2-1'),
-                                name: 'menu1-2-1',
-                                meta: { title: 'menu1-2-1' }
-                            },
-                            {
-                                path: 'menu1-2-2',
-                                component: () => import('@/views/nested/menu1/menu1-2/menu1-2-2'),
-                                name: 'menu1-2-2',
-                                meta: { title: 'menu1-2-2' }
-                            }
-                        ]
-                    },
-                    {
-                        path: 'menu1-3',
-                        component: () => import('@/views/nested/menu1/menu1-3'),
-                        name: 'menu1-3',
-                        meta: { title: 'menu1-3' }
-                    }
-                ]
-            },
-            {
-                path: 'menu2',
-                component: () => import('@/views/nested/menu2/index'),
-                meta: { title: 'menu2' }
+                name: 'platform_index',
+                component: () => import('@/views/platform/index'),
+                meta: { title: '平台信息', icon: 'icon-xinfengtianchong' }
             }
         ]
     },

@@ -20,7 +20,7 @@ import Title from "@/components/Title.vue";
 import Table from "@/components/Table.vue";
 import Detail from "@/components/Detail.vue";
 import { header, details } from './static.js';
-console.log(header, details)
+
 export default {
   name: "DashboardAdmin",
   components: {
@@ -123,7 +123,6 @@ export default {
               handleCommand: command => {
                 switch (command) {
                   case "detail":
-                    console.log(this.detailVisible);
                     this.detailVisible = true;
                 }
               }
