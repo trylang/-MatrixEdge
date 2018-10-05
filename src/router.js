@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 /* Layout */
 import Layout from './views/layout/Layout'
+import Blank from './views/layout/Blank'
 
 Vue.use(Router)
 
@@ -121,6 +122,38 @@ export const constantRouterMap = [
                 name: 'platform_index',
                 component: () => import('@/views/platform/index'),
                 meta: { title: '平台信息', icon: 'icon-xinfengtianchong' }
+            }
+        ]
+    },
+
+    // 数据科学家首次登录页
+    {
+        path: '/init/user',
+        component: Blank,
+        children: [
+            {
+                path: 'editPsd',
+                name: 'init_user_editPsd',
+                component: () => import('@/views/user/edit_psd'),
+                meta: { title: '修改初始密码', icon: 'icon-xinfengtianchong' }
+            },
+            {
+                path: 'welcome',
+                name: 'init_user_welcome',
+                component: () => import('@/views/user/init/welcome'),
+                meta: { title: '欢迎页', icon: 'icon-xinfengtianchong' }
+            },
+            {
+                path: 'quota',
+                name: 'init_user_quota',
+                component: () => import('@/views/user/init/quota'),
+                meta: { title: '配额说明页', icon: 'icon-xinfengtianchong' }
+            },
+            {
+                path: 'laboratory',
+                name: 'init_user_laboratory',
+                component: () => import('@/views/AI/index'),
+                meta: { title: '初始化实验室', icon: 'icon-xinfengtianchong' }
             }
         ]
     },

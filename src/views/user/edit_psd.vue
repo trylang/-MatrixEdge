@@ -1,18 +1,18 @@
 <template>
   <div class="dashboard-editor-container">
-    <Title title="修改密码"></Title>
+    <Title :title="title"></Title>
     <el-form class="form_content" :model="ruleForm" status-icon :rules="rules2" ref="ruleForm" label-width="120px">
-      <el-form-item label="本次登陆密码：" prop="original_pass">
-        <el-input type="password" v-model="ruleForm.original_pass" autocomplete="off" placeholder="本次成功登陆密码"></el-input>
+      <el-form-item :label="label" prop="original_pass">
+        <el-input type="password" v-model="ruleForm.original_pass" auto-complete="off" :placeholder="placeholder"></el-input>
       </el-form-item>
       <el-form-item label="修改密码：" prop="pass">
-        <el-input type="password" v-model="ruleForm.pass" autocomplete="off" placeholder="密码长度为6-16位，仅限字母、数字、横线、下划线"></el-input>
+        <el-input type="password" v-model="ruleForm.pass" auto-complete="off" placeholder="密码长度为6-16位，仅限字母、数字、横线、下划线"></el-input>
       </el-form-item>
       <el-form-item label="确认密码：" prop="checkPass">
-        <el-input type="password" v-model="ruleForm.checkPass" autocomplete="off" placeholder="确认密码"></el-input>
+        <el-input type="password" v-model="ruleForm.checkPass" auto-complete="off" placeholder="确认密码"></el-input>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" @click="submitForm('ruleForm')">确认</el-button>
+        <el-button type="primary" @click="submitForm('ruleForm')">{{$route.name === 'init_user_editPsd' ? '下一步': '确认'}}</el-button>
       </el-form-item>
     </el-form>
   </div>
@@ -65,11 +65,26 @@ export default {
       }
     };
   },
+  computed: {
+    title() {
+      return this.$route.name === 'init_user_editPsd' ? `欢迎使用MatrixEdge™
+      \r\n请修改您的初始密码` : '修改密码';
+    },
+    label() {
+      return this.$route.name === 'init_user_editPsd' ? '初始密码' : '本次登陆密码：';
+    },
+    placeholder() {
+      return this.$route.name === 'init_user_editPsd' ? '管理员所提供初始密码' : '本次成功登陆密码';
+    }
+  },
   methods: {
     submitForm(formName) {
       this.$refs[formName].validate(valid => {
         if (valid) {
           alert("submit!");
+          if (this.$route.name === 'init_user_editPsd') {
+            this.$router.push({ path: "/init/user/welcome" });  
+          }
         } else {
           console.log("error submit!!");
           return false;

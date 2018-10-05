@@ -1,6 +1,6 @@
 <template>
     <div class="login-container">
-        <el-form class="login-form" autoComplete="on" :model="loginForm" :rules="loginRules" ref="loginForm" label-position="left">
+        <el-form class="login-form" auto-complete="on" :model="loginForm" :rules="loginRules" ref="loginForm" label-position="left">
             <h3 class="title">Login</h3>
             <el-form-item prop="username">
                 <span class="fontcontainer">
@@ -9,7 +9,7 @@
                 <!-- <span class="svg-container svg-container_login">
                     <svg-icon icon-class="user" />
                 </span> -->
-                <el-input name="username" type="text" v-model="loginForm.username" autoComplete="on" placeholder="username" />
+                <el-input name="username" type="text" v-model="loginForm.username" auto-complete="on" placeholder="username" />
             </el-form-item>
             <el-form-item prop="password">
                 <span class="fontcontainer">
@@ -18,7 +18,7 @@
                 <!-- <span class="svg-container">
                 <svg-icon icon-class="password"></svg-icon>
                 </span> -->
-                <el-input name="password" :type="pwdType" @keyup.enter.native="handleLogin" v-model="loginForm.password" autoComplete="on"
+                <el-input name="password" :type="pwdType" @keyup.enter.native="handleLogin" v-model="loginForm.password" auto-complete="on"
                 placeholder="password"></el-input>
                 <!-- <span class="show-pwd" @click="showPwd"><svg-icon icon-class="eye" /></span> -->
                 <span class="show-pwd iconfont icon-yanjing" @click="showPwd"></span>
@@ -93,7 +93,11 @@ export default {
                         .dispatch("Login", this.loginForm)
                         .then(() => {
                             this.loading = false;
-                            this.$router.push({ path: "/" });
+                            // 为管理员登录
+                            // this.$router.push({ path: "/" });
+
+                            // 为数据科学家登录
+                            this.$router.push({ path: "/init/user/editPsd" });                            
                         })
                         .catch(() => {
                             this.loading = false;

@@ -3,16 +3,16 @@
     <Title title="更新用户信息"></Title>
     <el-form class="form_content" :model="ruleForm" status-icon :rules="rules2" ref="ruleForm" label-width="120px">
       <el-form-item label="姓名：" prop="name">
-        <el-input type="password" v-model="ruleForm.name" autocomplete="off" placeholder="请输入真实姓名"></el-input>
+        <el-input type="password" v-model="ruleForm.name" auto-complete="off" placeholder="请输入真实姓名"></el-input>
       </el-form-item>
       <el-form-item label="邮箱：" prop="email">
-        <el-input type="password" v-model="ruleForm.email" autocomplete="off" placeholder="请输入您的常用邮箱"></el-input>
+        <el-input type="password" v-model="ruleForm.email" auto-complete="off" placeholder="请输入您的常用邮箱"></el-input>
       </el-form-item>
       <el-form-item label="电话号码：" prop="phone">
-        <el-input type="password" v-model="ruleForm.phone" autocomplete="off" placeholder="可填固定电话或手机号"></el-input>
+        <el-input type="password" v-model="ruleForm.phone" auto-complete="off" placeholder="可填固定电话或手机号"></el-input>
       </el-form-item>
       <el-form-item label="单位（部门）：" prop="department">
-        <el-input type="password" v-model="ruleForm.department" autocomplete="off" placeholder="请填写单位（部门）全称"></el-input>
+        <el-input type="password" v-model="ruleForm.department" auto-complete="off" placeholder="请填写单位（部门）全称"></el-input>
       </el-form-item>
       <el-form-item>
         <el-button type="primary" @click="submitForm('ruleForm')">确认</el-button>
