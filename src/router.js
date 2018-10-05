@@ -56,7 +56,6 @@ export const constantRouterMap = [
             }
         ]
     },
-
     {
         path: '/practice',
         component: Layout,
@@ -66,6 +65,13 @@ export const constantRouterMap = [
                 name: 'practice_index',
                 component: () => import('@/views/practice/index'),
                 meta: { title: '训练管理', icon: 'icon-xinfengtianchong' }
+            },
+            {
+                path: '/practice/create',
+                name: 'practice_create',
+                hidden: true, 
+                component: () => import('@/views/practice/create'),
+                meta: { title: '创建训练', icon: 'icon-xinfengtianchong' }
             }
         ]
     },
@@ -88,6 +94,20 @@ export const constantRouterMap = [
                 name: 'user_log',
                 component: () => import('@/views/user/log'),
                 meta: { title: '用户日志', icon: 'icon-xinfengtianchong' }
+            },
+            {
+                path: 'editUser',
+                name: 'account_user',
+                hidden: true,
+                component: () => import('@/views/user/edit_account'),
+                meta: { title: '修改账户', icon: 'icon-xinfengtianchong' }
+            },
+            {
+                path: 'editPsd',
+                name: 'account_psd',
+                hidden: true,
+                component: () => import('@/views/user/edit_psd'),
+                meta: { title: '修改密码', icon: 'icon-xinfengtianchong' }
             }
         ]
     },

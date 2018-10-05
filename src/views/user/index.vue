@@ -104,11 +104,13 @@ export default {
               type: "btn",
               btntype: "primary",
               click: item => {
-                let quotas = item.quotas[0];
-                item.cpu = Number(quotas.cpu);
-                item.gpu = Number(quotas.gpu);
-                item.memory = Number(quotas.memory);
-                item.storage = Number(quotas.storage);
+                if (item.quotas.length > 0) {
+                  let quotas = item.quotas[0];
+                  item.cpu = Number(quotas.cpu);
+                  item.gpu = Number(quotas.gpu);
+                  item.memory = Number(quotas.memory);
+                  item.storage = Number(quotas.storage);
+                }
                 item.phone = String(item.phone);
                 Object.assign(this.dialog.param, item);
                 this.dialog.dialogVisible = true;

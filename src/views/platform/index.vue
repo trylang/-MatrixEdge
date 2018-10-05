@@ -9,7 +9,19 @@
         </div>
       </div>
     </div>
-     <el-button class="import-btn" type="primary">导入授权文件</el-button>
+    <el-upload
+      class="import-btn"
+      action="https://jsonplaceholder.typicode.com/posts/"
+      :on-preview="handlePreview"
+      :on-remove="handleRemove"
+      :before-remove="beforeRemove"
+      multiple
+      :limit="3"
+      :on-exceed="handleExceed"
+      :file-list="fileList">
+      <el-button type="primary">导入授权文件</el-button>
+      <!-- <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div> -->
+    </el-upload>
   </div>
 </template>
 
@@ -21,6 +33,7 @@ export default {
   },
   data() {
     return {
+      fileList: [],
       details: {
         版本: [
           {
@@ -40,7 +53,8 @@ export default {
             value: "0000-00000000"
           }
         ],
-        授权: [{
+        授权: [
+          {
             label: "激活状态：",
             value: "已激活/未激活"
           },
@@ -51,9 +65,28 @@ export default {
           {
             label: "授权时间：",
             value: "2018-09-03——9999-99-99"
-          },]
+          }
+        ]
       }
     };
+  },
+  methods: {
+    handleRemove(file, fileList) {
+      console.log(file, fileList);
+    },
+    handlePreview(file) {
+      console.log(file);
+    },
+    handleExceed(files, fileList) {
+      this.$message.warning(
+        `当前限制选择 3 个文件，本次选择了 ${
+          files.length
+        } 个文件，共选择了 ${files.length + fileList.length} 个文件`
+      );
+    },
+    beforeRemove(file, fileList) {
+      return this.$confirm(`确定移除 ${file.name}？`);
+    }
   }
 };
 </script>
@@ -62,7 +95,7 @@ export default {
 .info {
   margin-top: 3rem;
   padding: 0 2.5rem;
-  
+
   .info-content {
     display: flex;
     margin-top: 1rem;
@@ -84,7 +117,6 @@ export default {
 .import-btn {
   margin: 2rem 27rem;
 }
-
 </style>
 
 

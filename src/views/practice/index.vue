@@ -1,7 +1,7 @@
 <template>
   <div class="dashboard-editor-container">
     <Title title="训练管理">
-      <el-button type="primary">新增训练</el-button>
+      <el-button type="primary" @click="create">新增训练</el-button>
     </Title>
     <el-row class="progress-content">
       <Table :header="header" :content="content"></Table>
@@ -69,8 +69,7 @@ export default {
               type: "btn",
               btntype: "primary",
               click: item => {
-                Object.assign(this.dialog.param, item);
-                this.dialog.dialogVisible = true;
+                this.$router.push({path: '/practice/create', query: { id: item.id }});
               }
             },
             {
@@ -79,7 +78,7 @@ export default {
               type: "btn",
               btntype: "danger",
               click: (item, data) => {
-                this.deleteDialog(item, data);
+                this.deleteItem(item, data);
               }
             },
             {
@@ -139,12 +138,21 @@ export default {
       ],
       details
     };
+  },
+  methods: {
+    create() {
+      this.$router.push({path: '/practice/create'});
+    },
+    deleteItem(item) {
+      console.log(item);
+    }
   }
 };
 </script>
 
 <style rel="stylesheet/scss" lang="scss" scoped>
 .dashboard-editor-container {
+  height: 100%;
   padding: 32px;
   background-color: rgb(240, 242, 245);
   .chart-wrapper {
