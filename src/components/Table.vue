@@ -50,7 +50,7 @@
 			</tbody>
       
 	  </table>
-    <div v-if="content.length>0" class="table_page">
+    <div v-if="!noPage && content.length>0" class="table_page">
       <el-pagination
         @size-change="handleSizeChange"
         @current-change="handleCurrentChange"
@@ -68,7 +68,7 @@
 <script>
 export default {
   name: "Table",
-  props: ["header", "content"],
+  props: ["header", "content", "noPage"],
   data() {
     return {
       currentPage: 1

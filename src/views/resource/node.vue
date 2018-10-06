@@ -40,210 +40,170 @@
 
       <Table :header="nodeHeader" :content="nodeContent"></Table>
     </el-row>
+
+    <el-dialog
+      title="资源分配概览"
+      :visible.sync="detail.dialogVisible"
+      width="76%">
+      <div>
+        <Title title="主机名：MASTEr-1"></Title>
+        <div class="chart_content">
+          <div class="chart_item" v-for="(quato, index) in quatos" :key="index">
+            <pie-chart :chartData="quato" height="350px"/>
+          </div>
+        </div>
+      </div>
+    </el-dialog>
+
   </div>
 </template>
 
 <script>
-import Title from '@/components/Title.vue'
-import Table from '@/components/Table.vue'
+import Title from "@/components/Title.vue";
+import Table from "@/components/Table.vue";
+import PieChart from "@/components/PieChart";
+import { alertHeader, nodeHeader } from "./static.js";
 export default {
-  name: 'DashboardAdmin',
+  name: "DashboardAdmin",
   components: {
     Title,
-    Table
+    Table,
+    PieChart
   },
   data() {
     return {
-      progressList: [{
-        label: '节点在线率',
-        percent: 90,
-        color: '#5dbf99',
-        value: `总数量(台)：${10}`
-      }, {
-        label: 'CPU使用率',
-        percent: 55,
-        color: '#8e71c7',
-        value: `总数量(个)：${20}`
-      }, {
-        label: 'GPU使用率',
-        percent: 20,
-        color: '#fb5130',
-        value: `总数量(个)：${20}`
-      }, {
-        label: '内存使用率',
-        percent: 55,
-        color: '#8e71c7',
-        value: `总数量(个)：${20}`
-      }, {
-       label: '存储使用率',
-        percent: 90,
-        color: '#5dbf99',
-        value: `总数量(个)：${20}`
-      }],
-      options: [{
-        value: '选项1',
-        label: '黄金糕'
-      }, {
-        value: '选项2',
-        label: '双皮奶'
-      }, {
-        value: '选项3',
-        label: '蚵仔煎'
-      }, {
-        value: '选项4',
-        label: '龙须面'
-      }, {
-        value: '选项5',
-        label: '北京烤鸭'
-      }],
-      value8: '',
+      progressList: [
+        {
+          label: "节点在线率",
+          percent: 90,
+          color: "#5dbf99",
+          value: `总数量(台)：${10}`
+        },
+        {
+          label: "CPU使用率",
+          percent: 55,
+          color: "#8e71c7",
+          value: `总数量(个)：${20}`
+        },
+        {
+          label: "GPU使用率",
+          percent: 20,
+          color: "#fb5130",
+          value: `总数量(个)：${20}`
+        },
+        {
+          label: "内存使用率",
+          percent: 55,
+          color: "#8e71c7",
+          value: `总数量(个)：${20}`
+        },
+        {
+          label: "存储使用率",
+          percent: 90,
+          color: "#5dbf99",
+          value: `总数量(个)：${20}`
+        }
+      ],
+      options: [],
+      value8: "",
       param: {},
-      header: [
-        {
-          label: "规则",
-          type: "text",
-          name: "id"
+      header: alertHeader,
+      nodeHeader: nodeHeader.concat({
+        label: "操作",
+        name: "operations",
+        type: "buttons",
+        style: {
+          width: "130px"
         },
-        {
-          label: "对象",
-          type: "text",
-          name: "name"
-        },
-        {
-          label: "类别",
-          type: "text",
-          name: "desc"
-        },
-        {
-          label: "级别",
-          type: "text",
-          name: "desc"
-        },
-        {
-          label: "描述",
-          type: "text",
-          name: "desc"
-        },
-        {
-          label: "告警时间",
-          name: "update_time",
-          type: "time",
-          filter: "yyyy-MM-dd hh:mm:ss.S"
-        },
-        // {
-        //   label: "操作",
-        //   name: "operations",
-        //   type: "buttons",
-        //   style: {
-        //     width: "130px"
-        //   },
-        //   operations: [
-        //     {
-        //       label: "编辑",
-        //       name: "edit",
-        //       type: "",
-        //       style: {
-        //         color: "#902323"
-        //       },
-        //       class: "edit",
-        //       click: (item) => {
-        //         Object.assign(this.dialog.param, item);
-        //         this.dialog.dialogVisible = true;
-        //       }
-        //     },
-        //     {
-        //       label: "删除",
-        //       name: "delete",
-        //       type: "",
-        //       style: {
-        //         color: "#093216"
-        //       },
-        //       class: "delete",
-        //       click: (item, data) => {
-        //         this.deleteDialog(item, data);
-        //       }
-        //     }
-        //   ]
-        // }
-      ],
-      nodeHeader: [
-        {
-          label: "主机名",
-          type: "text",
-          name: "id"
-        },
-        {
-          label: "网络信息",
-          type: "text",
-          name: "name"
-        },
-        {
-          label: "操作系统",
-          type: "text",
-          name: "desc"
-        },
-        {
-          label: "规格",
-          type: "text",
-          name: "desc"
-        },
-        {
-          label: "状态",
-          type: "text",
-          name: "desc"
-        },
-        {
-          label: "GPU",
-          type: "text",
-          name: "desc"
-        },
-        {
-          label: "创建时间",
-          name: "update_time",
-          type: "time",
-          filter: "yyyy-MM-dd hh:mm:ss.S"
-        },
-        // {
-        //   label: "操作",
-        //   name: "operations",
-        //   type: "buttons",
-        //   style: {
-        //     width: "130px"
-        //   },
-        //   operations: [
-        //     {
-        //       label: "编辑",
-        //       name: "edit",
-        //       type: "",
-        //       style: {
-        //         color: "#902323"
-        //       },
-        //       class: "edit",
-        //       click: (item) => {
-        //         Object.assign(this.dialog.param, item);
-        //         this.dialog.dialogVisible = true;
-        //       }
-        //     },
-        //     {
-        //       label: "删除",
-        //       name: "delete",
-        //       type: "",
-        //       style: {
-        //         color: "#093216"
-        //       },
-        //       class: "delete",
-        //       click: (item, data) => {
-        //         this.deleteDialog(item, data);
-        //       }
-        //     }
-        //   ]
-        // }
-      ],
+        operations: [
+          {
+            label: "详情",
+            name: "info",
+            type: "btn",
+            btntype: "primary",
+            click: item => {
+              Object.assign(this.detail.data, item);
+              this.detail.dialogVisible = true;
+              this.quatos = [
+                {
+                  legend: ["CPU总资源", "CPU分配数", "CPU使用率"],
+                  series: {
+                    name: "资源配置",
+                    data: [
+                      {
+                        name: "CPU总资源",
+                        value: 10
+                      },
+                      {
+                        name: "CPU分配数",
+                        value: 5
+                      },
+                      {
+                        name: "CPU使用率",
+                        value: 80
+                      }
+                    ]
+                  }
+                },
+                {
+                  legend: ["GPU总资源", "GPU分配数", "GPU使用率"],
+                  series: {
+                    name: "资源配置",
+                    data: [
+                      {
+                        name: "GPU总资源",
+                        value: 3
+                      },
+                      {
+                        name: "GPU分配数",
+                        value: 1
+                      },
+                      {
+                        name: "GPU使用率",
+                        value: 100
+                      }
+                    ]
+                  }
+                },
+                {
+                  legend: ["内存总资源", "内存使用率"],
+                  series: {
+                    name: "资源配置",
+                    data: [
+                      {
+                        name: "内存总资源",
+                        value: 192
+                      },
+                      {
+                        name: "内存使用率",
+                        value: 52
+                      }
+                    ]
+                  }
+                },
+              ];
+            }
+          }
+        ]
+      }),
       content: [],
-      nodeContent: [],
-    }
+      nodeContent: [{
+        name: 'MASTE-1',
+        internet: '192.68.1.10',
+        system: 'Ubuntu16.04',
+        standard: 'E5-2650v4 *2,P100 *2,MEN 256G',
+        state: '在线',
+        gpu: '是',
+        update_time: new Date()
+      }],
+      detail: {
+        dialogVisible: false,
+        data: {}
+      },
+      quatos: []
+    };
   }
-}
+};
 </script>
 
 <style rel="stylesheet/scss" lang="scss" scoped>
@@ -259,7 +219,10 @@ export default {
 }
 
 .progress-content {
-  background:#fff;padding:16px 16px 0;margin-top: 32px; margin-bottom:32px;
+  background: #fff;
+  padding: 16px 16px 0;
+  margin-top: 32px;
+  margin-bottom: 32px;
   .filter-content {
     display: flex;
     width: 70%;
@@ -273,6 +236,12 @@ export default {
       }
     }
   }
-  
+}
+
+.chart_content {
+  display: flex;
+  .chart_item {
+    flex: 1;
+  }
 }
 </style>

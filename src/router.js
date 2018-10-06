@@ -48,12 +48,22 @@ export const constantRouterMap = [
     {
         path: '/AI',
         component: Layout,
+        redirect: '/AI/index',
+        name: 'AI_home',
+        meta: { title: 'AI实验室', icon: 'icon-fenleiorguangchangorqitatianchong' },
         children: [
             {
                 path: 'index',
                 name: 'AI_index',
                 component: () => import('@/views/AI/index'),
                 meta: { title: 'AI实验室', icon: 'icon-xinfengtianchong' }
+            },
+            {
+                path: 'info',
+                name: 'AI_info',
+                hidden: true,
+                component: () => import('@/views/AI/info'),
+                meta: { title: '实验室信息', icon: 'icon-xinfengtianchong' },
             }
         ]
     },
@@ -154,6 +164,12 @@ export const constantRouterMap = [
                 name: 'init_user_laboratory',
                 component: () => import('@/views/AI/index'),
                 meta: { title: '初始化实验室', icon: 'icon-xinfengtianchong' }
+            },
+            {
+                path: 'laboratory/info',
+                name: 'init_user_laboratory_info',
+                component: () => import('@/views/AI/info'),
+                meta: { title: '实验室信息', icon: 'icon-xinfengtianchong' },
             }
         ]
     },
