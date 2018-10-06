@@ -19,7 +19,7 @@ export const logHeader = [{
   name: "desc"
 },
 {
-  label: "L时间",
+  label: "时间",
   name: "update_time",
   type: "time",
   filter: "yyyy-MM-dd hh:mm:ss.S"
