@@ -158,6 +158,10 @@ export default {
         }
       }
       .form_content {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
         .form_item {
           display: flex;
           margin: 1rem 0;
@@ -173,7 +177,7 @@ export default {
         }
         .customer_btn {
           margin-top: 2rem;
-          margin-left: 14rem;
+          width: 5rem;
         }
       }
     }
