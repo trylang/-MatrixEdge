@@ -1,7 +1,10 @@
 <template>
+<div>
   <svg :class="svgClass" aria-hidden="true">
     <use :xlink:href="iconName"/>
   </svg>
+</div>
+ 
 </template>
 
 <script>

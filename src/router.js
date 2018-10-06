@@ -140,6 +140,7 @@ export const constantRouterMap = [
     {
         path: '/init/user',
         component: Blank,
+        hidden: true,
         children: [
             {
                 path: 'editPsd',

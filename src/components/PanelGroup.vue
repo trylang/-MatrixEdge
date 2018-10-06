@@ -97,15 +97,19 @@ export default {
     }
     .icon-people {
       color: #40c9c6;
+      font-size: 48px;
     }
     .icon-message {
       color: #36a3f7;
+      font-size: 48px;
     }
     .icon-money {
       color: #f4516c;
+      font-size: 48px;
     }
     .icon-shopping {
-      color: #34bfa3
+      color: #34bfa3;
+      font-size: 48px;
     }
     .card-panel-icon-wrapper {
       float: left;
@@ -116,7 +120,7 @@ export default {
     }
     .card-panel-icon {
       float: left;
-      font-size: 48px;
+      font-size: 72px;
     }
     .card-panel-description {
       float: right;
