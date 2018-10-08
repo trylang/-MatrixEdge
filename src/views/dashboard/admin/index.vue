@@ -126,13 +126,13 @@ export default {
           label: "内存使用率",
           percent: parseInt(memory.usage * 100),
           color: "#8e71c7",
-          value: `总数量(个)：${memory.capacity}`
+          value: `总数量(G)：${memory.capacity}`
         },
         {
           label: "存储使用率",
           percent: parseInt(storage.usage * 100),
           color: "#5dbf99",
-          value: `总数量(个)：${storage.capacity}`
+          value: `总数量(G)：${storage.capacity}`
         }
       ];
     }

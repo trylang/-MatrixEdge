@@ -7,9 +7,9 @@
       </header>
       <div class="form_init">
         <div v-if="showInit" class="init_content">
-          <strong>Tensorflow-1.5-CPU-4C-4Men</strong>
+          <strong>Tensorflow-1.4-CPU-4C-4Men</strong>
           <div class="init_info">
-            <p>提示：工具Tensorflow 1.5 CPU版本</p>
+            <p>提示：工具Tensorflow 1.4 CPU版本</p>
             <p>4CPU</p>
             <p>4G内存</p>
           </div>
@@ -120,7 +120,6 @@ export default {
             }
           });
         }else {
-          local
           this.$router.push({ path: "/AI/info", query: {...res}}); 
         }
       });      

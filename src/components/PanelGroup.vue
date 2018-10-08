@@ -7,7 +7,7 @@
         </div>
         <div class="card-panel-description">
           <div class="card-panel-text">故障总数</div>
-          <count-to :start-val="0" :end-val="102400" :duration="2600" class="card-panel-num"/>
+          <count-to :start-val="0" :end-val="23" :duration="2600" class="card-panel-num"/>
         </div>
       </div>
     </el-col>
@@ -18,7 +18,7 @@
         </div>
         <div class="card-panel-description">
           <div class="card-panel-text">未读故障</div>
-          <count-to :start-val="0" :end-val="81212" :duration="3000" class="card-panel-num"/>
+          <count-to :start-val="0" :end-val="5" :duration="1500" class="card-panel-num"/>
         </div>
       </div>
     </el-col>

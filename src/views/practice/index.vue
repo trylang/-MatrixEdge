@@ -123,24 +123,41 @@ export default {
                 switch (command) {
                   case "detail":
                     this.detailVisible = true;
+                  case "tensorboard":
+                    window.open('http://192.168.88.203:8181/user/hsh/tensorboard/1/#scalars', '_blank');
                 }
               }
             }
           ]
         }),
-      content: [
-        {
-          id: 3,
-          name: "mnist",
-          accuracy: "98.121",
-          status: "完成",
-          quate: "CPU:5,内存 :20",
-          time: 0.05,
-          update_time: new Date()
-        }
-      ],
+      // content: [
+      //   {
+      //     id: 3,
+      //     name: "GAN-11",
+      //     accuracy: "98.121",
+      //     status: "完成",
+      //     quate: "CPU:5,GPU:5,内存:20",
+      //     time: 5,
+      //     update_time: new Date()
+      //   }
+      // ],
       details
     };
+  },
+  computed: {
+    content() {
+      let data = JSON.parse(window.localStorage.getItem('node'));
+      if (!data) data = [{
+          id: 3,
+          name: "GAN-11",
+          accuracy: "98.121",
+          status: "完成",
+          quate: "CPU:5,GPU:5,内存:20",
+          time: 5,
+          update_time: new Date()
+        }];
+      return data;
+    }
   },
   methods: {
     create() {
@@ -151,6 +168,12 @@ export default {
       // this.$api.deleteTfjobs(item.name).then(res => {
       //   console.log(res);
       // })
+    },
+    mounted() {
+      console.log(322, window.localStorage.getItem('node'))
+    },
+    updated() {
+      console.log(333, window.localStorage.getItem('node'))
     }
   }
 };

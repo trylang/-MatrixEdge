@@ -43,6 +43,8 @@ service.interceptors.response.use(
         */
         const res = response.data
         if (res.code !== 0) {
+            debugger
+            
             Message({
                 message: res.message,
                 type: 'error',

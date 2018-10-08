@@ -53,9 +53,11 @@ export default {
       this.$store.dispatch('ToggleSideBar')
     },
     logout() {
+      let _this = this;
       this.$store.dispatch('LogOut').then(() => {
-        location.reload() // 为了重新实例化vue-router对象 避免bug
-      })
+        _this.$router.push('/login');
+        // location.reload() // 为了重新实例化vue-router对象 避免bug
+      });
     }
   }
 }

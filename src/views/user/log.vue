@@ -46,7 +46,7 @@ export default {
         {
           label: "结果",
           type: "text",
-          name: "desc"
+          name: "jieguo"
         },
         {
           label: "时间",
@@ -55,7 +55,13 @@ export default {
           filter: "yyyy-MM-dd hh:mm:ss.S"
         },
       ],
-      content: [],
+      content: [{
+        id: 'wang',
+        name: '192.168.88.121',
+        desc: '登录平台',
+        jieguo: '成功',
+        update_time: '2018-10-08 14:03:58'
+      }],
     }
   }
 }

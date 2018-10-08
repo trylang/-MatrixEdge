@@ -116,7 +116,19 @@ export default {
         color: '#5dbf99',
         value: `总数量(个)：${20}`
       },],
-      options: [],
+      options: [{
+        label: 'MASTE-1',
+        value: 'MASTE-1'
+      },{
+        label: 'NODE-2',
+        value: 'NODE-2'
+      },{
+        label: 'NODE-3',
+        value: 'NODE-3'
+      },{
+        label: 'NODE-4',
+        value: 'NODE-4'
+      },],
       value8: ''
     }
   },

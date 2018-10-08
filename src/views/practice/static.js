@@ -121,11 +121,11 @@ export const details = {
     基础信息: [
       {
         label: "训练名称",
-        value: "GAN-11"
+        value: "mnist"
       },
       {
         label: "部署模式",
-        value: "单机/集群"
+        value: "集群"
       },
       {
         label: "部署机位",

@@ -149,6 +149,24 @@ export default {
     },
     submitForm(formName) {
       console.log(this.roles);
+      let node = [{
+          id: 3,
+          name: "GAN-11",
+          accuracy: "98.121",
+          status: "完成",
+          quate: "CPU:5,GPU:5,内存:20",
+          time: 5,
+          update_time: new Date()
+        }, {
+          id: 5,
+          name: "mnist",
+          accuracy: "0",
+          status: "运行",
+          quate: "CPU:5,内存:20",
+          time: 0,
+          update_time: new Date()
+      }];
+      window.localStorage.setItem('node', JSON.stringify(node));
       this.$msg('success', '创建训练成功');
       this.$router.push({path: '/practice/index'});
       // this.$refs[formName].validate(valid => {

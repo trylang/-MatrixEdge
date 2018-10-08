@@ -195,6 +195,30 @@ export default {
         state: '在线',
         gpu: '是',
         update_time: new Date()
+      }, {
+        name: 'NODE-2',
+        internet: '192.68.1.11',
+        system: 'Ubuntu16.04',
+        standard: 'E5-2650v4 *2,P100 *2,MEN 256G',
+        state: '在线',
+        gpu: '是',
+        update_time: new Date()
+      }, {
+        name: 'NODE-3',
+        internet: '192.68.1.12',
+        system: 'Ubuntu16.04',
+        standard: 'E5-2650v4 *2,P100 *2,MEN 256G',
+        state: '在线',
+        gpu: '是',
+        update_time: new Date()
+      }, {
+        name: 'NODE-4',
+        internet: '192.68.1.13',
+        system: 'Ubuntu16.04',
+        standard: 'E5-2650v4 *2,P100 *2,MEN 256G',
+        state: '在线',
+        gpu: '是',
+        update_time: new Date()
       }],
       detail: {
         dialogVisible: false,
