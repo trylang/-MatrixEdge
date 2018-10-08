@@ -1,8 +1,8 @@
 import request from '@/utils/request'
 
-export function fetchList(query) {
+export function tfjobList(query) {
   return request({
-    url: '/transaction/list',
+    url: '/tfjobs/api/tfjob/',
     method: 'get',
     params: query
   })
@@ -16,6 +16,15 @@ function addTfjobs(param) {
   })
 }
 
-export default {
-  addTfjobs
+function deleteTfjobs(name) {
+  return request({
+    url: `tfjobs/api/tfjob/default/${name}`,
+    method: 'delete',
+  })
+}
+
+export default {  
+  tfjobList,
+  addTfjobs,
+  deleteTfjobs
 }

@@ -59,17 +59,32 @@ export default {
         type: "time",
         filter: "yyyy-MM-dd hh:mm:ss.S",
         name: "date"
-      }],
-      content: [{
-        tool: 'Tensorflow 1.6（GPU）',
-        configure: 'GPU:2 CPU:1 内存：4g',
-        date: new Date()
       }]
     };
   },
+  computed: {
+    content() {
+      let arr = [];
+      let query = this.$route.query;
+      if (query) {       
+        arr.push({
+          tool: query.engine,
+          configure: `GPU:${query.gpu} CPU:${query.cpu} 内存：${query.memory}`,
+          date: query.create_at,
+          status: query.status,
+          lab_url: query.lab_url,
+        })
+      }
+      return arr;
+    }
+  },
   methods: {
     goToHandler() {
-      this.$router.push({ path: "/AI/index" }); 
+      if (this.content.length > 0 && this.content[0].status === 'Running') {
+        window.open(this.content[0].lab_url, "_blank");
+      } else {
+        this.$msg('warning', '目前无法跳转');
+      }
     },
     confirmHandler() {
       this.$msg("success", "重置成功");

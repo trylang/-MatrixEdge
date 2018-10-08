@@ -6,7 +6,7 @@
 
 const base = {    
   mock: ' https://www.easy-mock.com/mock/5bb3790d0b166245847a1c30/MatrixEdge',
-  baseURL: '',
+  baseURL: 'http://192.168.88.203:8000',
 }
 
 let domain = document.domain
@@ -14,7 +14,8 @@ switch (domain) {
   case '127.0.0.1':
   case 'localhost':
     // base.baseURL = 'http://192.168.88.203:8000';
-    base.baseURL = '/api/'
+    // base.baseURL = '/api/'
+    base.baseURL = base.baseURL;
     break
   default:
     break

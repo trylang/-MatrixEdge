@@ -1,10 +1,19 @@
 import request from '@/utils/request'
 
-function addHub(param) {
+function addHub(params) {
   return request({
-    url: '/v1/hub/spawn',
+    url: '/v1/hub/spawn/',
+    contentType: 'application/x-www-form-urlencoded',
     method: 'post',
-    data: param
+    transformRequest: [function (data) {
+      let ret = ''
+      for (let it in data) {
+        // ret += encodeURIComponent(it) + '=' + encodeURIComponent(data[it]) + '&'
+        ret += it + '=' + data[it] + '&'
+      }
+      return ret
+    }],
+    data: params
   })
 }
 

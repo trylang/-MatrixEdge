@@ -38,6 +38,7 @@
 
 <script>
 import { isvalidUsername } from "@/utils/validate";
+import { mapState } from 'vuex'
 
 export default {
   name: "login",
@@ -50,23 +51,24 @@ export default {
       }
     };
     const validatePass = (rule, value, callback) => {
-      if (value.length < 5) {
-        callback(new Error("密码不能小于5位"));
-      } else {
-        callback();
-      }
+      callback();
+      // if (value.length < 3) {
+      //   callback(new Error("密码不能小于3位"));
+      // } else {
+      //   callback();
+      // }
     };
     return {
       loginForm: {
-        username: "admin",
-        password: "123456"
+        username: "hsh",
+        password: "q1w2e3r4"
       },
       loginRules: {
         username: [
           {
             required: true,
             trigger: "blur",
-            validator: validateUsername
+            // validator: validateUsername
           }
         ],
         password: [{ required: true, trigger: "blur", validator: validatePass }]
@@ -75,6 +77,15 @@ export default {
       pwdType: "password"
     };
   },
+  computed: mapState({
+    // arrow functions can make the code very succinct!
+    user: state => state.user,
+    
+    // to access local state with `this`, a normal function must be used
+    countPlusLocalState (state) {
+      return state.count + this.localCount
+    }
+  }),
   methods: {
     showPwd() {
       if (this.pwdType === "password") {
@@ -84,21 +95,30 @@ export default {
       }
     },
     handleLogin() {
+      let _this = this;
       this.$refs.loginForm.validate(valid => {
         if (valid) {
           this.loading = true;
           this.$store
             .dispatch("Login", this.loginForm)
             .then(() => {
-              this.loading = false;
-							// 为管理员登录
-							if (this.loginForm.username === 'admin') {
+              this.$api.getInfo().then(user => {
+                this.loading = false;
+              // 为管理员登录
+							if (user.role === 1) {
 								this.$router.push({ path: "/" });
 							}
 							else {
-								// 为数据科学家登录
-              	this.$router.push({ path: "/init/user/editPsd" });
+                // 为数据科学家登录
+                if (user.login_count === 1) { // 初始化信息
+              	  this.$router.push({ path: "/init/user/editPsd" });
+                } else if (!user.is_initial_lab) { // 没有初始化，跳欢迎页面
+                  this.$router.push({ path: "/init/user/welcome" });
+                } else {
+                  this.$router.push({ path: "/" });
+                }
 							}  
+              })
             })
             .catch(() => {
               this.loading = false;

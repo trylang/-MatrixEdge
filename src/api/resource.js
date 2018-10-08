@@ -7,3 +7,7 @@ export function getList(params) {
     params
   })
 }
+
+export default {
+  getList
+}

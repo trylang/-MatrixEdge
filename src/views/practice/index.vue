@@ -63,15 +63,15 @@ export default {
             width: "130px"
           },
           operations: [
-            {
-              label: "编辑",
-              name: "edit",
-              type: "btn",
-              btntype: "primary",
-              click: item => {
-                this.$router.push({path: '/practice/create', query: { id: item.id }});
-              }
-            },
+            // {
+            //   label: "编辑",
+            //   name: "edit",
+            //   type: "btn",
+            //   btntype: "primary",
+            //   click: item => {
+            //     this.$router.push({path: '/practice/create', query: { id: item.id }});
+            //   }
+            // },
             {
               label: "删除",
               name: "delete",
@@ -90,26 +90,26 @@ export default {
               },
               class: "dropdown",
               options: [
-                {
-                  label: "继续",
-                  command: "continue"
-                },
-                {
-                  label: "暂停",
-                  command: "pause"
-                },
-                {
-                  label: "重新训练",
-                  command: "repeat"
-                },
-                {
-                  label: "提醒规则",
-                  command: "rules"
-                },
-                {
-                  label: "编辑器",
-                  command: "editor"
-                },
+                // {
+                //   label: "继续",
+                //   command: "continue"
+                // },
+                // {
+                //   label: "暂停",
+                //   command: "pause"
+                // },
+                // {
+                //   label: "重新训练",
+                //   command: "repeat"
+                // },
+                // {
+                //   label: "提醒规则",
+                //   command: "rules"
+                // },
+                // {
+                //   label: "编辑器",
+                //   command: "editor"
+                // },
                 {
                   label: "tensorboard",
                   command: "tensorboard"
@@ -130,10 +130,13 @@ export default {
         }),
       content: [
         {
-          id: "haha",
-          name: "enne",
-          desc: "jeshi",
-          update_time: "2018-3-21"
+          id: 3,
+          name: "mnist",
+          accuracy: "98.121",
+          status: "完成",
+          quate: "CPU:5,内存 :20",
+          time: 0.05,
+          update_time: new Date()
         }
       ],
       details
@@ -145,6 +148,9 @@ export default {
     },
     deleteItem(item) {
       console.log(item);
+      // this.$api.deleteTfjobs(item.name).then(res => {
+      //   console.log(res);
+      // })
     }
   }
 };

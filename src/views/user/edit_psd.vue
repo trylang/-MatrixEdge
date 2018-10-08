@@ -2,11 +2,11 @@
   <div class="dashboard-editor-container">
     <Title :title="title"></Title>
     <el-form class="form_content" :model="ruleForm" status-icon :rules="rules2" ref="ruleForm" label-width="120px">
-      <el-form-item :label="label" prop="original_pass">
-        <el-input type="password" v-model="ruleForm.original_pass" auto-complete="off" :placeholder="placeholder"></el-input>
+      <el-form-item :label="label" prop="oldpassword">
+        <el-input type="password" v-model="ruleForm.oldpassword" auto-complete="off" :placeholder="placeholder"></el-input>
       </el-form-item>
-      <el-form-item label="修改密码：" prop="pass">
-        <el-input type="password" v-model="ruleForm.pass" auto-complete="off" placeholder="密码长度为6-16位，仅限字母、数字、横线、下划线"></el-input>
+      <el-form-item label="修改密码：" prop="newpassword">
+        <el-input type="password" v-model="ruleForm.newpassword" auto-complete="off" placeholder="密码长度为6-16位，仅限字母、数字、横线、下划线"></el-input>
       </el-form-item>
       <el-form-item label="确认密码：" prop="checkPass">
         <el-input type="password" v-model="ruleForm.checkPass" auto-complete="off" placeholder="确认密码"></el-input>
@@ -38,7 +38,7 @@ export default {
     var validatePass2 = (rule, value, callback) => {
       if (value === "") {
         callback(new Error("请再次输入密码"));
-      } else if (value !== this.ruleForm.pass) {
+      } else if (value !== this.ruleForm.newpassword) {
         callback(new Error("两次输入密码不一致!"));
       } else {
         callback();
@@ -46,15 +46,15 @@ export default {
     };
     return {
       ruleForm: {
-        original_pass: "",
-        pass: "",
+        oldpassword: "",
+        newpassword: "",
         checkPass: ""
       },
       rules2: {
-        original_pass: [
+        oldpassword: [
           { required: true, message: "请输入本次登陆密码", trigger: "blur" },
         ],
-        pass: [
+        newpassword: [
           { required: true, message: "请输入修改密码", trigger: "blur" },
           { validator: validatePass, trigger: "blur" }
         ],
@@ -81,10 +81,16 @@ export default {
     submitForm(formName) {
       this.$refs[formName].validate(valid => {
         if (valid) {
-          alert("submit!");
-          if (this.$route.name === 'init_user_editPsd') {
-            this.$router.push({ path: "/init/user/welcome" });  
-          }
+          this.$api.changePsd(this.ruleForm).then(res => {
+            if (this.$route.name === 'init_user_editPsd') {
+              this.$router.push({ path: "/init/user/welcome" });  
+            } else {
+              this.$msg("success", "密码修改成功");
+              this.$store.dispatch('LogOut').then(() => {
+                location.reload() // 为了重新实例化vue-router对象 避免bug
+              });
+            }
+          })
         } else {
           console.log("error submit!!");
           return false;

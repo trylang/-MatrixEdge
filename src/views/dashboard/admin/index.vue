@@ -13,7 +13,7 @@
       <!-- <line-chart :chart-data="lineChartData"/> -->
     </el-row>
 
-    <Title title="训练任务"></Title>
+    <!-- <Title title="训练任务"></Title> -->
     <!-- <el-row :gutter="32">
       <el-col :xs="24" :sm="24" :lg="8">
         <div class="chart-wrapper">
@@ -48,13 +48,13 @@
 </template>
 
 <script>
-import Title from '@/components/Title.vue'
-import PanelGroup from '@/components/PanelGroup'
-import LineChart from '@/components/LineChart'
-import RaddarChart from '@/components/RaddarChart'
-import PieChart from '@/components/PieChart'
-import BarChart from '@/components/BarChart'
-import TransactionTable from '@/components/TransactionTable'
+import Title from "@/components/Title.vue";
+import PanelGroup from "@/components/PanelGroup";
+import LineChart from "@/components/LineChart";
+import RaddarChart from "@/components/RaddarChart";
+import PieChart from "@/components/PieChart";
+import BarChart from "@/components/BarChart";
+import TransactionTable from "@/components/TransactionTable";
 // import TodoList from './components/TodoList'
 // import BoxCard from './components/BoxCard'
 
@@ -75,10 +75,10 @@ const lineChartData = {
     expectedData: [130, 140, 141, 142, 145, 150, 160],
     actualData: [120, 82, 91, 154, 162, 140, 130]
   }
-}
+};
 
 export default {
-  name: 'DashboardAdmin',
+  name: "DashboardAdmin",
   components: {
     Title,
     PanelGroup,
@@ -86,56 +86,71 @@ export default {
     RaddarChart,
     PieChart,
     BarChart,
-    TransactionTable,
+    TransactionTable
     // TodoList,
     // BoxCard
   },
   data() {
     return {
-      lineChartData: lineChartData.newVisitis,
-      progressList: [{
-        label: '节点在线率',
-        percent: 90,
-        color: '#5dbf99',
-        value: `总数量(台)：${10}`
-      },  {
-        label: 'CPU使用率',
-        percent: 55,
-        color: '#8e71c7',
-        value: `总数量(个)：${20}`
-      }, {
-        label: 'GPU使用率',
-        percent: 20,
-        color: '#fb5130',
-        value: `总数量(个)：${20}`
-      }, {
-        label: '内存使用率',
-        percent: 55,
-        color: '#8e71c7',
-        value: `总数量(个)：${20}`
-      },{
-       label: '存储使用率',
-        percent: 90,
-        color: '#5dbf99',
-        value: `总数量(个)：${20}`
-      },]
+      overData: {},
+      lineChartData: lineChartData.newVisitis
+    };
+  },
+  computed: {
+    progressList() {
+      let cpu = this.overData.cpu || {usage: 0, capacity: ''};
+      let gpu = this.overData.gpu || {usage: 0, capacity: ''};
+      let node = this.overData.node || {rate: 0, total: ''};
+      let memory = this.overData.memory || {usage: 0, capacity: ''};
+      let storage = this.overData.storage || {usage: 0, capacity: ''};
+      return [
+        {
+          label: "节点在线率",
+          percent: parseInt(node.rate * 100),
+          color: "#5dbf99",
+          value: `总数量(台)：${node.total}`
+        },
+        {
+          label: "CPU使用率",
+          percent: parseInt(cpu.usage * 100),
+          color: "#8e71c7",
+          value: `总数量(个)：${cpu.capacity}`
+        },
+        {
+          label: "GPU使用率",
+          percent: parseInt(gpu.usage * 100),
+          color: "#fb5130",
+          value: `总数量(个)：${gpu.capacity}`
+        },
+        {
+          label: "内存使用率",
+          percent: parseInt(memory.usage * 100),
+          color: "#8e71c7",
+          value: `总数量(个)：${memory.capacity}`
+        },
+        {
+          label: "存储使用率",
+          percent: parseInt(storage.usage * 100),
+          color: "#5dbf99",
+          value: `总数量(个)：${storage.capacity}`
+        }
+      ];
     }
   },
   methods: {
     handleSetLineChartData(type) {
-      this.lineChartData = lineChartData[type]
+      this.lineChartData = lineChartData[type];
     },
     init() {
       this.$api.getOverviewData().then(res => {
-        console.log(res);
-        
-      })
+        this.overData = res;
+      });
     }
   },
   created() {
     this.init();
   }
-}
+};
 </script>
 
 <style rel="stylesheet/scss" lang="scss" scoped>
@@ -150,14 +165,16 @@ export default {
 }
 
 .progress-content {
-    background:#fff;padding:16px 16px 0;margin-bottom:32px;
-    display: flex;
-    .progress-item {
-      flex: 1;
-      text-align: center;
-      h5 {
-        // text-align: center;
-      }
+  background: #fff;
+  padding: 16px 16px 0;
+  margin-bottom: 32px;
+  display: flex;
+  .progress-item {
+    flex: 1;
+    text-align: center;
+    h5 {
+      // text-align: center;
     }
   }
+}
 </style>

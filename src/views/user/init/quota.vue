@@ -18,33 +18,45 @@
 
 <script>
 import PieChart from '@/components/PieChart'
+import { mapState } from 'vuex'
+
 export default {
   name: 'quato',
   components: {
     PieChart
   },
   data() {
-    return {
-      quato: {
+    return {}    
+  },
+  computed: mapState({
+    // arrow functions can make the code very succinct!
+    user: state => state.user,
+    quato() {
+      let quotas = this.user.user.quotas ? this.user.user.quotas[0] : {}
+      return {
         legend: ['CPU', 'GPU', '内存', '存储'],
         series: {
           name: '资源配置',
           data: [{
-            name: 'CPU', value: 3
+            name: 'CPU', value: quotas.cpu
           }, {
-            name: 'GPU', value: 10
+            name: 'GPU', value: quotas.gpu
           }, {
-            name: '内存', value: 50
-          }, {name: '存储', value: 100
+            name: '内存', value: quotas.memory
+          }, {
+            name: '存储', value: quotas.storage
           }]
         }
-      }
-    }    
-  },
+      }    
+    }
+  }),
   methods: {
     nextHandler() {
       this.$router.push({ path: "/init/user/laboratory" });                            
     }
+  },
+  mounted() {
+    console.log(this.user)
   }
 }
 </script>

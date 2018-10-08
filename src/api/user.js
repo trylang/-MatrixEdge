@@ -2,7 +2,7 @@ import request from '@/utils/request'
 
 export function login(username, password) {
     return request({
-        url: '/user/auth',
+        url: '/user/auth/',
         method: 'post',
         data: {
             username,
@@ -11,17 +11,16 @@ export function login(username, password) {
     })
 }
 
-export function getInfo(token) {
+export function getInfo() {
     return request({
         url: '/user/info',
         method: 'get',
-        params: { token }
     })
 }
 
 export function logout() {
     return request({
-        url: '/user/logout',
+        url: '/user/logout/',
         method: 'get'
     })
 }
@@ -34,9 +33,18 @@ function getUserList(params) {
     }) 
 }
 
+
+function createUser(params) {
+    return request({
+        url: '/user/create/',
+        method: 'post',
+        data: params
+    })
+}
+
 function updateUser(params) {
     return request({
-        url: '/user/update',
+        url: '/user/update/',
         method: 'put',
         data: params
     })
@@ -44,8 +52,16 @@ function updateUser(params) {
 
 function deleteUser(params) {
     return request({
-        url: '/user/delete',
+        url: '/user/delete/',
         method: 'delete',
+        data: params
+    })
+}
+
+function changePsd(params) {
+    return request({
+        url: '/user/changepassword/',
+        method: 'post',
         data: params
     })
 }
@@ -55,6 +71,8 @@ export default {
     logout,
     getInfo,
     getUserList,
+    createUser,
     updateUser,
-    deleteUser
+    deleteUser,
+    changePsd
 }

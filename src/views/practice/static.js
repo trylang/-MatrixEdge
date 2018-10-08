@@ -1,38 +1,33 @@
 export const header = [{
   label: "名称",
   type: "text",
-  name: "id"
-},
-{
-  label: "用户",
-  type: "text",
   name: "name"
 },
 {
   label: "accuracy",
   type: "text",
-  name: "desc"
+  name: "accuracy"
 },
 {
   label: "状态",
   type: "text",
-  name: "desc"
+  name: "status"
 },
 {
   label: "配置（总计）",
   type: "text",
-  name: "desc"
+  name: "quate"
 },
 {
   label: "运行时间（小时）",
   type: "text",
-  name: "desc"
+  name: "time"
 },
 {
   label: "创建时间",
   name: "update_time",
   type: "time",
-  filter: "yyyy-MM-dd hh:mm:ss.S"
+  filter: "yyyy-MM-dd"
 }];
 
 export const dialog = {

@@ -15,10 +15,12 @@ export const constantRouterMap = [
         component: Layout,
         redirect: '/dashboard',
         name: 'Dashboard',
-        hidden: true,
+        // hidden: true,
+        meta: { title: '概览', icon: 'icon-fenleiorguangchangorqitatianchong' },
         children: [{
             path: 'dashboard',
-            component: () => import('@/views/dashboard/index')
+            component: () => import('@/views/dashboard/index'),
+            meta: { title: '概览', icon: 'icon-fenleiorguangchangorqitatianchong' },
         }]
     },
 

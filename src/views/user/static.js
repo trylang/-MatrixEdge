@@ -55,8 +55,9 @@ export const userHeader = [{
   name: "name"
 },{
   label: "创建时间",
-  type: "text",
-  name: "name"
+  name: "created_at",
+  type: "time",
+  filter: "yyyy-MM-dd hh:mm:ss.S"
 },];
 
 export const userDialog = {
@@ -108,7 +109,7 @@ export const userDialog = {
     name: 'cpu',
     type: 'slider',
     min: 0,
-    max: 4
+    max: 30
   }, {
     label: '内存（GB）',
     name: 'memory',

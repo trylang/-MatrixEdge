@@ -14,11 +14,11 @@
       <div class="filter-content">
         <div class="filter-item">
           <span>账号：</span>
-          <el-input v-model="param.username" placeholder="请输入账号" @change="getUserList"></el-input>
+          <el-input v-model="param.username" placeholder="请输入账号" clearable @clear="clearParam('username')" @change="getUserList"></el-input>
         </div>
         <div class="filter-item">
           <span>手机号：</span>
-          <el-input v-model="param.phone" placeholder="请输入电话号码" @change="getUserList"></el-input>
+          <el-input v-model="param.phone" placeholder="请输入电话号码" clearable @clear="clearParam('phone')" @change="getUserList"></el-input>
         </div>
         <div class="filter-item">
           <span>创建时间：</span>
@@ -149,33 +149,33 @@ export default {
     };
   },
   methods: {
+    clearParam(name) {
+      this.param[name] = null;
+    },
     confirmDialog () {
       let _this = this;
+      let param = Object.assign({}, this.dialog.param);
+      param.quota = {cpu: param.cpu, memory: param.memory, gpu: param.gpu, storage: param.storage}
       if (this.dialog.param.id) {
         // 修改
-        this.dialog.dialogVisible = false;
-        let param = Object.assign({}, this.dialog.param);
-        param.quota = {cpu: param.cpu, memory: param.memory, gpu: param.gpu, storage: param.storage}
+        this.dialog.dialogVisible = false;        
         this.$api.updateUser(param).then(res => {
           _this.$msg("success", "修改成功!");
           _this.getUserList();
         })
           .catch(error => {
-            _this.$msg("error", !error.message? "无法修改，请重试!" : error.message);
+            _this.$msg("error", !error.msg? error.msg :'无法修改，请重试');
           });
       } else {
         // 新增
-        if (this.dialog.param.id && this.dialog.param.name) {
+        this.$api.createUser(param).then(res => {
+          _this.$msg("success", "创建成功!");
           this.dialog.dialogVisible = false;
-          this.$store
-            .dispatch("addAccountGroup", this.dialog.param)
-            .then(() => {
-              $message("success", "添加成功!");
-            })
-            .catch(error => {
-              $message("error", !error.message? "无法添加，请重试!" : error.message);
-            });
-        }
+          _this.getUserList();
+        })
+          .catch(error => {
+            _this.$msg("error", !error.msg? "无法创建，请重试!" : error.msg);
+          });
       }
     },
     cancelDialog () {
@@ -191,7 +191,7 @@ export default {
     },
     getUserList() {
       let param = Object.assign({}, this.param);
-      if (param.date.length > 0) {
+      if (param.date && param.date.length > 0) {
         param.created_start = param.date[0];
         param.created_end = param.date[1];
       }  

@@ -9,16 +9,19 @@
         <div v-if="showInit" class="init_content">
           <strong>Tensorflow-1.5-CPU-4C-4Men</strong>
           <div class="init_info">
-            <p>提示：工具Tensorflow 1.6 CPU版本</p>
+            <p>提示：工具Tensorflow 1.5 CPU版本</p>
             <p>4CPU</p>
             <p>4G内存</p>
           </div>
-          <el-button class="customer_btn" type="primary" @click="showInit=false;">自定义</el-button>
+          <div class="btn_content">
+            <el-button class="btn" type="primary" @click="confirmHandler">下一步</el-button>  
+            <el-button class="btn" @click="showInit=false;">自定义</el-button>        
+          </div>         
         </div>
         <div v-else class="form_content">
           <div class="form_item">
             <span class="form_label">训练工具：</span>
-            <el-select v-model="param.tool" placeholder="请选择">
+            <el-select v-model="param.image" placeholder="请选择">
               <el-option
                 v-for="item in options"
                 :key="item.value"
@@ -33,17 +36,17 @@
           </div>
           <div class="form_item">
             <span class="form_label">CPU（个）</span>
-            <el-slider class="form_sel" v-model="param.cpu" :min="0" :max="25"></el-slider>
+            <el-slider class="form_sel" style="width: 12rem;" v-model="param.cpu_guarantee" :min="0" :max="25"></el-slider>
             <strong>推荐值：4</strong>
           </div>
           <div class="form_item">
             <span class="form_label">内存（GB）</span>
-            <el-slider class="form_sel" v-model="param.memory" :min="0" :max="25"></el-slider>
+            <el-slider class="form_sel" style="width: 12rem;"  v-model="param.mem_guarantee" :min="0" :max="25"></el-slider>
             <strong>推荐值：4</strong>
           </div>
           <div class="form_item">
             <span class="form_label">GPU（个）</span>
-            <el-input-number class="form_sel" :disabled="param.ifgpu !=1" v-model="param.gpu" :min="0" :max="4" label="描述文字"></el-input-number>
+            <el-input-number class="form_sel" :disabled="param.ifgpu !=1" v-model="param.extra_resource_limits" :min="0" :max="4" label="描述文字"></el-input-number>
             <strong>推荐值：0</strong>
           </div>
           <el-button class="customer_btn" type="primary" @click="confirmHandler">确定</el-button>
@@ -69,21 +72,27 @@ export default {
       sampleImg,
       showInit: true,
       param: {
-        ifgpu: false
+        ifgpu: false,
+        image: 'gcr.io/kubeflow-images-public/tensorflow-1.4.1-notebook-cpu:v0.2.1',
+        cpu_guarantee: 4,
+        mem_guarantee: 4,
+        extra_resource_limits: 0
       },
       options: [{
         label: 'Tensorflow 1.8 CPU',
         value: 'Tensorflow 1.8 CPU'
       }, {
-        label: 'Tensorflow 1.6 CPU',
-        value: 'Tensorflow 1.6 CPU'
-      }, {
-        label: 'Tensorflow 1.8 GPU',
-        value: 'Tensorflow 1.8 GPU'
-      }, {
-        label: 'Tensorflow 1.6 GPU',
-        value: 'Tensorflow 1.6 GPU'
-      }]
+        label: 'Tensorflow 1.4.1 CPU',
+        value: 'gcr.io/kubeflow-images-public/tensorflow-1.4.1-notebook-cpu:v0.2.1'
+      }
+      // ,{
+      //   label: 'Tensorflow 1.8 GPU',
+      //   value: 'Tensorflow 1.8 GPU'
+      // }, {
+      //   label: 'Tensorflow 1.6 GPU',
+      //   value: 'Tensorflow 1.6 GPU'
+      // }
+      ]
     }
   },
   computed: {
@@ -95,18 +104,26 @@ export default {
   },
   methods: {
     confirmHandler() {
-      if (this.$route.name === 'init_user_laboratory') {
-        this.$alert('密码修改完成。“确定”后重新登录，开启您的AI之旅', '完成', {
-          confirmButtonText: '确定',
-          callback: action => {
-            this.$store.dispatch('LogOut').then(() => {
-              location.reload() // 为了重新实例化vue-router对象 避免bug
-            })
-          }
-        });
-      }else {
-        this.$router.push({ path: "/AI/info" }); 
-      }
+      let param = {
+        image: this.param.image,
+        cpu_guarantee: this.param.cpu_guarantee,
+        mem_guarantee: `${this.param.mem_guarantee}Gi`,
+        extra_resource_limits: `nvidia.com/gpu: ${this.param.extra_resource_limits}`
+      };
+      if (this.param.extra_resource_limits == 0) delete param.extra_resource_limits;
+      this.$api.addHub(param).then(res => {
+        if (this.$route.name === 'init_user_laboratory') {
+          this.$alert('开启您的AI之旅', '完成', {
+            confirmButtonText: '确定',
+            callback: action => {
+              this.$router.push('/');
+            }
+          });
+        }else {
+          local
+          this.$router.push({ path: "/AI/info", query: {...res}}); 
+        }
+      });      
     }
   }
 }
@@ -121,6 +138,7 @@ export default {
     header{
       display: flex;
       justify-content: center;
+      padding-right: 2rem;
       img {
         width: 100px;
         height: 100px;
@@ -128,7 +146,7 @@ export default {
       h1 {
         height: 6rem;
         line-height: 5rem;
-        margin-left: 3rem;
+        margin-left: 2rem;
         color: #333;
       }
     }
@@ -152,9 +170,8 @@ export default {
           line-height: 0rem;
           color: #666;
         }
-        .customer_btn {
+        .btn_content {
           margin-top: 2rem;
-          width: 5rem;
         }
       }
       .form_content {

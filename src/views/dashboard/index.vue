@@ -17,15 +17,16 @@ export default {
       currentRole: 'adminDashboard'
     }
   },
-  // computed: {
-  //   ...mapGetters([
-  //     'roles'
-  //   ])
-  // },
-  // created() {
-  //   if (!this.roles.includes('admin')) {
-  //     this.currentRole = 'editorDashboard'
-  //   }
-  // }
+  computed: {
+    ...mapGetters([
+      'user'
+    ])
+  },
+  mounted() {
+    console.log('this.user.user.role', this.user.user.role)
+    if (!this.user.user.role === 2) {
+      this.currentRole = 'scientistDashboard'
+    }
+  }
 }
 </script>

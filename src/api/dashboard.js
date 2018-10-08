@@ -2,7 +2,7 @@ import request from '@/utils/request'
 
 function getOverviewData(params) {
     return request({
-        url: '/v1/monitor/get_overview_data',
+        url: '/v1/monitor/get_overview_data/',
         method: 'get',
         params
     }) 

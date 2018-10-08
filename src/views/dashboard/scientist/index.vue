@@ -50,7 +50,7 @@ const lineChartData = {
 }
 
 export default {
-  name: 'DashboardAdmin',
+  name: 'scientistDashboard',
   components: {
     Title,
     PanelGroup,
@@ -86,6 +86,9 @@ export default {
     handleSetLineChartData(type) {
       this.lineChartData = lineChartData[type]
     }
+  },
+  mounted() {
+    console.log('我进来啦')
   }
 }
 </script>
