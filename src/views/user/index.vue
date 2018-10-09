@@ -89,7 +89,13 @@ export default {
         date: []
       },
       logHeader,
-      logContent: [],
+      logContent: [{
+        id: 'wang',
+        name: '192.168.88.121',
+        desc: '登录平台',
+        jieguo: '成功',
+        update_time: '2018-10-08 14:03:58'
+      }],
       userHeader: userHeader.concat({
           label: "操作",
           name: "operations",

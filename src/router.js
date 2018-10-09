@@ -16,11 +16,11 @@ export const constantRouterMap = [
         redirect: '/dashboard',
         name: 'Dashboard',
         // hidden: true,
-        meta: { title: '概览', icon: 'icon-fenleiorguangchangorqitatianchong' },
+        meta: { title: '概览', icon: 'icon-shezhitianchong' },
         children: [{
             path: 'dashboard',
             component: () => import('@/views/dashboard/index'),
-            meta: { title: '概览', icon: 'icon-fenleiorguangchangorqitatianchong' },
+            meta: { title: '概览', icon: 'icon-shouyetianchong' },
         }]
     },
 
@@ -35,13 +35,13 @@ export const constantRouterMap = [
                 path: 'index',
                 name: 'resource_index',
                 component: () => import('@/views/resource/index'),
-                meta: { title: '概览', icon: 'icon-shoujitianchong' }
+                meta: { title: '概览', icon: 'icon-fenleiorguangchangorqitatianchong' }
             },
             {
                 path: 'node',
                 name: 'resource_node',
                 component: () => import('@/views/resource/node'),
-                meta: { title: '节点管理', icon: 'icon-shoujitianchong' }
+                meta: { title: '节点管理', icon: 'icon-fenleiorguangchangorqitatianchong' }
             }
             
         ]
@@ -52,13 +52,13 @@ export const constantRouterMap = [
         component: Layout,
         redirect: '/AI/index',
         name: 'AI_home',
-        meta: { title: 'AI实验室', icon: 'icon-fenleiorguangchangorqitatianchong' },
+        meta: { title: 'AI实验室', icon: 'icon-yibantishi' },
         children: [
             {
                 path: 'index',
                 name: 'AI_index',
                 component: () => import('@/views/AI/index'),
-                meta: { title: 'AI实验室', icon: 'icon-xinfengtianchong' }
+                meta: { title: 'AI实验室', icon: 'icon-yibantishi' }
             },
             {
                 path: 'info',
@@ -72,19 +72,21 @@ export const constantRouterMap = [
     {
         path: '/practice',
         component: Layout,
+        redirect: '/practice/index',
+        meta: { title: '训练管理', icon: 'icon-fasongxinxitianchong' },
         children: [
             {
                 path: 'index',
                 name: 'practice_index',
                 component: () => import('@/views/practice/index'),
-                meta: { title: '训练管理', icon: 'icon-xinfengtianchong' }
+                meta: { title: '训练管理', icon: 'icon-chahuafeitianchong' }
             },
             {
                 path: '/practice/create',
                 name: 'practice_create',
                 hidden: true, 
                 component: () => import('@/views/practice/create'),
-                meta: { title: '创建训练', icon: 'icon-xinfengtianchong' }
+                meta: { title: '创建训练', icon: 'icon-fasongxinxitianchong' }
             }
         ]
     },
@@ -94,19 +96,19 @@ export const constantRouterMap = [
         component: Layout,
         redirect: '/user/index',
         name: 'user_home',
-        meta: { title: '用户管理', icon: 'icon-fenleiorguangchangorqitatianchong' },
+        meta: { title: '用户管理', icon: 'icon-yonghutianchong' },
         children: [
             {
                 path: 'index',
                 name: 'user_index',
                 component: () => import('@/views/user/index'),
-                meta: { title: '用户信息', icon: 'icon-xinfengtianchong' }
+                meta: { title: '用户信息', icon: 'icon-yonghutianchong' }
             },
             {
                 path: 'log',
                 name: 'user_log',
                 component: () => import('@/views/user/log'),
-                meta: { title: '用户日志', icon: 'icon-xinfengtianchong' }
+                meta: { title: '用户日志', icon: 'icon-yonghutianchong' }
             },
             {
                 path: 'editUser',
@@ -133,7 +135,7 @@ export const constantRouterMap = [
                 path: 'index',
                 name: 'platform_index',
                 component: () => import('@/views/platform/index'),
-                meta: { title: '平台信息', icon: 'icon-xinfengtianchong' }
+                meta: { title: '平台信息', icon: 'icon-bangzhu' }
             }
         ]
     },

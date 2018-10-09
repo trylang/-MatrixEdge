@@ -1,3 +1,5 @@
+
+import  {checkEmail, checkPhone} from '@/utils/validate'
 export const logHeader = [{
   label: "账号",
   type: "text",
@@ -16,7 +18,7 @@ export const logHeader = [{
 {
   label: "结果",
   type: "text",
-  name: "desc"
+  name: "jieguo"
 },
 {
   label: "时间",
@@ -87,7 +89,7 @@ export const userDialog = {
   }, {
     label: '手机号',
     name: 'phone',
-    type: 'number',
+    type: 'text',
     placeholder: '可填固定电话或手机号'
   }, {
     label: '单位（部门）',
@@ -136,11 +138,12 @@ export const userDialog = {
     ],
     email: [
       { required: true, message: '请输入邮箱', trigger: 'blur' },
-      { min: 3, max: 50, message: '请输入正确的邮箱', trigger: 'blur' }
+      { validator: checkEmail, trigger: 'blur' },
     ],
     phone: [
       { required: true, message: '请输入电话号码', trigger: 'blur' },
-      { min: 0, max: 99999999999, message: '请输入正确的电话号吗', trigger: 'blur' }
+      { validator: checkPhone, trigger: 'blur' },
     ],
   }
 };
+

@@ -14,8 +14,8 @@ import base from '@/api/base.js'
 //     BASE_API = '"http://193.112.153.155:3001"';
 // }
 const service = axios.create({
-    baseURL: base.baseURL, // api的base_url
-    // baseURL: base.mock, // api的base_url
+    // baseURL: base.baseURL, // api的base_url
+    baseURL: base.mock, // api的base_url
     timeout: 1000 * 5 * 60 // 请求超时时间
 })
 
