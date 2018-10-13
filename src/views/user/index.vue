@@ -203,6 +203,7 @@ export default {
       }  
       delete param.date;    
       this.$api.getUserList(param).then(res => {
+        res.forEach(item => item.state = false);
         this.userContent = res;
       })
     }

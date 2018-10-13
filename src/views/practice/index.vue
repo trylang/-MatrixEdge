@@ -4,6 +4,9 @@
       <el-button type="primary" @click="create">新增训练</el-button>
     </Title>
     <el-row class="progress-content">
+      <div class="batch-content">
+        <el-button type="primary" @click="batchDelete">删除</el-button>
+      </div>
       <Table :header="header" :content="content"></Table>
     </el-row>
     <el-dialog
@@ -123,58 +126,59 @@ export default {
                 switch (command) {
                   case "detail":
                     this.detailVisible = true;
+                    break;
                   case "tensorboard":
                     window.open('http://192.168.88.203:8181/user/hsh/tensorboard/1/#scalars', '_blank');
+                    break;
                 }
               }
             }
           ]
         }),
-      // content: [
-      //   {
-      //     id: 3,
-      //     name: "GAN-11",
-      //     accuracy: "98.121",
-      //     status: "完成",
-      //     quate: "CPU:5,GPU:5,内存:20",
-      //     time: 5,
-      //     update_time: new Date()
-      //   }
-      // ],
+      content: [],
       details
     };
-  },
-  computed: {
-    content() {
-      let data = JSON.parse(window.localStorage.getItem('node'));
-      if (!data) data = [{
-          id: 3,
-          name: "GAN-11",
-          accuracy: "98.121",
-          status: "完成",
-          quate: "CPU:5,GPU:5,内存:20",
-          time: 5,
-          update_time: new Date()
-        }];
-      return data;
-    }
   },
   methods: {
     create() {
       this.$router.push({path: '/practice/create'});
     },
     deleteItem(item) {
-      console.log(item);
-      // this.$api.deleteTfjobs(item.name).then(res => {
-      //   console.log(res);
-      // })
+      this.$api.deleteTfjobs([item.name]).then(res => {
+        this.$msg("success", "删除成功!");
+        this.getList();
+      })
     },
-    mounted() {
-      console.log(322, window.localStorage.getItem('node'))
+    batchDelete () {
+      let _this = this;
+      let names = this.content.filter(item => item.state).map(item => item.name);
+      this.$api.deleteTfjobs(names).then(res => {
+        _this.$msg("success", "删除成功!");
+        _this.getList();
+      })
     },
-    updated() {
-      console.log(333, window.localStorage.getItem('node'))
-    }
+    getList() {
+      let _this = this;
+      this.$api.tfjobList().then(res => {
+        _this.content = res.items.map(item => {
+          return {
+            name: item.metadata.name,
+            status: item.status.conditions ? item.status.conditions.map(status => {
+              return status.type;
+            }).join(',') : '',
+            time: item.status.conditions ? item.status.conditions.map(status => {
+              let dur = new Date(status.lastUpdateTime).valueOf() - new Date(item.metadata.creationTimestamp).valueOf();
+              return dur;
+            }).join(',') : '',
+            create_time: item.metadata.creationTimestamp,
+            state: false
+          }
+        });
+      }) 
+    },
+  },
+  created() {
+    this.getList();
   }
 };
 </script>
@@ -208,6 +212,9 @@ export default {
         line-height: 2.6rem;
       }
     }
+  }
+  .batch-content {
+    margin-top: 1.5rem;
   }
 }
 </style>

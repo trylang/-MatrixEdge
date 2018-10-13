@@ -26,10 +26,10 @@
         </el-select>
       </el-form-item>
 
-      <el-form-item label="引擎选择：">
-        <el-select v-model="role.engine" placeholder="请选择">
+      <el-form-item label="容器镜像：">
+        <el-select v-model="role.image" placeholder="请选择">
           <el-option
-            v-for="item in [{label: 'Tensorflow 1.8 GPU', value: 'Tensorflow 1.8 GPU'}, {label: 'Tensorflow 1.8 CPU', value: 'Tensorflow 1.8 CPU'}, {label: 'Tensorflow 1.5 CPU', value: 'Tensorflow 1.5 CPU'}]"
+            v-for="item in images"
             :key="item.value"
             :label="item.label"
             :value="item.value">
@@ -37,50 +37,72 @@
         </el-select>
       </el-form-item>
 
-      <el-form-item label="语言选择：">
-        <el-select v-model="role.language" placeholder="请选择">
-          <el-option
-            v-for="item in [{label: 'Python', value: 'Python'}]"
-            :key="item.value"
-            :label="item.label"
-            :value="item.value">
-          </el-option>
-        </el-select>
+      <el-form-item label="运行命令：">
+        <el-input type="text" v-model="role.command" auto-complete="off" placeholder="请输入运行命令【以英文逗号分割】"></el-input>
       </el-form-item>
 
-      <el-form-item label="训练PY文件路径：">
-        <label for="fileinp">
-          <input type="button" class="filebtn" value="浏览"><span class="text">路径</span>
-          <input type="file" class="fileinp">
-        </label>
+      <el-form-item label="运行命令参数：">
+        <el-input type="text" v-model="role.args" auto-complete="off" placeholder="请输入运行命令参数【以英文逗号分割】"></el-input>
+      </el-form-item>
+
+      <el-form-item label="副本数">
+        <el-input-number v-if="role.role==='Chief'" v-model="role.replicas" :min="0" :max="1" label="副本数"></el-input-number>      
+        <el-input-number v-else v-model="role.replicas" :min="0" :max="9999999999" label="副本数"></el-input-number>      
       </el-form-item>
 
       <el-form-item label="初始化参数：">
         <span style="cursor: pointer;" @click="addInit(index)"><i class="el-icon-circle-plus"></i>  添加初始化参数</span>
-        <div class="init_param" v-for="(item, index) in role.initParamList" :key="index">
+        <div class="init_param" v-for="(item, index) in role.env" :key="index">
           <el-input class="param_item" type="text" v-model="item.name" auto-complete="off" placeholder="name"></el-input>
           <el-input class="param_item" type="text" v-model="item.value" auto-complete="off" placeholder="value"></el-input>
           <i class="el-icon-delete param_item param_item_icon" @click="deleteInitParam(index, item)"></i>
         </div>
       </el-form-item>
 
-      <el-form-item label="结果存放路径：">
+      <el-form-item label="卷：">
+        <span style="cursor: pointer;" @click="addVolumes(index)"><i class="el-icon-circle-plus"></i>  添加卷</span>
+        <div class="init_param init_volumes" v-for="(item, index) in role.volumes" :key="index">
+          <div class="volume_item">
+            <el-select class="param_item" v-model="item.volume" placeholder="请选择"> <el-option v-for="option in [{label: 'Azure File', value: 'azureFile'}, {label: 'Host Path', value: 'hostPath'}]" :key="option.value" :label="option.label" :value="option.value"> </el-option> </el-select>
+            <el-input class="param_item" type="text" v-model="item.name" auto-complete="off" placeholder="name"></el-input>
+          </div>
+          
+          <div class="volume_item">
+            <el-input class="param_item" type="text" v-model="item.mountPath" auto-complete="off" placeholder="Mount Path"></el-input>
+            <el-input class="param_item" type="text" v-model="item.subPath" auto-complete="off" placeholder="Sub Path"></el-input>
+          </div>
+
+          <div v-show="item.volume == 'hostPath'"  class="volume_item">
+            <el-input class="param_item" type="text" v-model="item.hostPath" auto-complete="off" placeholder="Host Path"></el-input>
+          </div>
+          
+          <div v-show="item.volume == 'azureFile'" class="volume_item">
+            <el-input class="param_item" type="text" v-model="item.secretName" auto-complete="off" placeholder="Secret Name"></el-input>
+            <el-input class="param_item" type="text" v-model="item.shareName" auto-complete="off" placeholder="Share Name"></el-input>
+          </div>
+          
+          <i class="el-icon-delete param_item param_item_icon" @click="deleteInitVolume(index, item)"></i>
+        </div>
+      </el-form-item>
+
+      <!-- <el-form-item label="结果存放路径：">
         <label for="fileinp">
           <input type="button" class="filebtn" value="浏览"><span class="text">路径</span>
           <input type="file" class="fileinp">
         </label>
-      </el-form-item>
+      </el-form-item> -->
 
       <el-form-item  label="GPU(个)：">
         <el-slider :min="0" :max="15"  v-model="role.gpu"></el-slider>
       </el-form-item>
-      <el-form-item label="CPU(个)：">
+
+      <!-- <el-form-item label="CPU(个)：">
         <el-slider :min="0" :max="15"  v-model="role.cpu"></el-slider>
       </el-form-item>
 
       <el-form-item label="内存(GB)：">
         <el-slider :min="0" :max="30"  v-model="role.gb"></el-slider>
-      </el-form-item>
+      </el-form-item> -->
 
     </el-form>
     
@@ -108,15 +130,18 @@ export default {
       ifAdd: 1,
       roles: [{
         radio: 1,
-        initParamList: [{
+        role: 'Chief',
+        replicas: 0,
+        env: [{
           name: '',
           value: ''
         }],
+        volumes: []
       }],
       addRole: false,
-      initParamList: [{
-        name: '',
-        value: ''
+      images: [{
+        label: 'Tensorflow 1.4.1 CPU',
+        value: 'gcr.io/kubeflow-images-public/tensorflow-1.4.1-notebook-cpu:v0.2.1'
       }],
       options: [
         {
@@ -147,52 +172,104 @@ export default {
     chackRadio(value) {
       this.ifAdd = value;
     },
+    formatParam(data) {
+      let param = {
+        metadata: {
+          name: '',
+          namespace: 'default',
+        },
+        spec: {
+          tfReplicaSpecs: {}
+        }
+      }
+      
+      let specs = param.spec.tfReplicaSpecs;
+      data.forEach(item => {
+        if (item.name) {
+          param.metadata.name = item.name
+        }
+        specs[item.role] = {
+          replicas: item.replicas,
+          template: {
+            spec: {
+              restartPolicy: "OnFailure",
+              volumes: item.volumes.map(volume => {
+                if (volume.volume === 'azureFile') {
+                  return {
+                    name: volume.name,
+                    subPath: volume.subPath,
+                    azureFile: {
+                      secretName: volume.secretName,
+                      shareName: volume.shareName
+                    }
+                  }
+                } else if (volume.volume === 'hostPath') {
+                  return {
+                    name: volume.name,
+                    subPath: volume.subPath,
+                    hostPath: {
+                      path: volume.hostPath
+                    }
+                  }
+                }
+                
+              }),
+              containers: [{
+                image: item.image,
+                name: 'tensorflow',
+                command: [item.command],
+                args: [item.args],
+                env: item.env,
+                resources: {
+                  limits: {
+                    "nvidia.com/gpu": item.gpu
+                  },
+                  requests: {
+                    "nvidia.com/gpu": item.gpu
+                  }
+                },
+                volumeMounts: item.volumes.map(volume => {
+                  return {
+                    name: volume.name,
+                    mountPath: volume.mountPath
+                  }
+                })
+              }]
+            }
+          }
+        };
+      })
+      // console.log(JSON.stringify(param));
+      return param;
+    },
     submitForm(formName) {
-      console.log(this.roles);
-      let node = [{
-          id: 3,
-          name: "GAN-11",
-          accuracy: "98.121",
-          status: "完成",
-          quate: "CPU:5,GPU:5,内存:20",
-          time: 5,
-          update_time: new Date()
-        }, {
-          id: 5,
-          name: "mnist",
-          accuracy: "0",
-          status: "运行",
-          quate: "CPU:5,内存:20",
-          time: 0,
-          update_time: new Date()
-      }];
-      window.localStorage.setItem('node', JSON.stringify(node));
-      this.$msg('success', '创建训练成功');
-      this.$router.push({path: '/practice/index'});
-      // this.$refs[formName].validate(valid => {
-      //   if (valid) {
-      //     alert("submit!");
-      //   } else {
-      //     console.log("error submit!!");
-      //     return false;
-      //   }
-      // });
+      let param = this.formatParam(this.roles);
+      this.$api.addTfjobs(param).then(res => {
+        this.$router.push({path: '/practice/index'});
+      });
     },
     addRoleHandler() {
       this.roles.push({
         addRole: true,
-        initParamList: [{
+        replicas: 0,
+        env: [{
           name: '',
           value: ''
         }],
-        ruleForm: {}
+        volumes: [],
       })
     },
     addInit(index) {
-      this.roles[index].initParamList.unshift({name: '', value: ''});
+      this.roles[index].env.unshift({name: '', value: ''});
+    },
+    addVolumes(index) {
+      this.roles[index].volumes.unshift({volume: 'hostPath', name: '', mountPath: '', subPath: '', hostPath: '', secretName: '', shareName: ''});
     },
     deleteInitParam(index, item) {
-      this.roles[index].initParamList.splice(index, 1);
+      this.roles[index].env.splice(index, 1);
+    },
+    deleteInitVolume(index, item) {
+      this.roles[index].volumes.splice(index, 1);
     },
     fetchDate() {}
   },
@@ -235,7 +312,7 @@ export default {
     padding-left: 1rem;
     color: #666;
   }
-  .init_param {
+  .init_param, .init_volumes {
     display: flex;
     padding-bottom: .5rem;
     .param_item {
@@ -243,6 +320,14 @@ export default {
     }
     .param_item_icon {
       line-height: 2rem;
+    }
+  }
+
+  .init_volumes {
+    flex-direction: column;
+    .volume_item {
+      display: flex;
+      margin-top: 1rem;
     }
   }
 }

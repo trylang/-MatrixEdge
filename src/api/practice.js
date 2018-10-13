@@ -2,7 +2,7 @@ import request from '@/utils/request'
 
 export function tfjobList(query) {
   return request({
-    url: '/tfjobs/api/tfjob/',
+    url: 'v1/tfjob/list/',
     method: 'get',
     params: query
   })
@@ -10,7 +10,7 @@ export function tfjobList(query) {
 
 function addTfjobs(param) {
   return request({
-    url: '/tfjobs/api/tfjob',
+    url: '/v1/tfjob/create/',
     method: 'post',
     data: param
   })
@@ -18,7 +18,8 @@ function addTfjobs(param) {
 
 function deleteTfjobs(name) {
   return request({
-    url: `tfjobs/api/tfjob/default/${name}`,
+    url: `/v1/tfjob/delete`,
+    data: name,
     method: 'delete',
   })
 }

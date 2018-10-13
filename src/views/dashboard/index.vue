@@ -22,9 +22,8 @@ export default {
       'user'
     ])
   },
-  mounted() {
-    console.log('this.user.user.role', this.user.user.role)
-    if (!this.user.user.role === 2) {
+  created() {
+    if (this.user.user.role === 2) {
       this.currentRole = 'scientistDashboard'
     }
   }

@@ -1,4 +1,8 @@
 export const header = [{
+  label: "",
+  name: "state",
+  type: "checkbox"
+}, {
   label: "名称",
   type: "text",
   name: "name"
@@ -25,7 +29,7 @@ export const header = [{
 },
 {
   label: "创建时间",
-  name: "update_time",
+  name: "create_time",
   type: "time",
   filter: "yyyy-MM-dd"
 }];
