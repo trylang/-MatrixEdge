@@ -7,10 +7,13 @@ import './icons' // icon
 //  reset CSS
 import "normalize.css/normalize.css";
 
+import '../theme/index.css';
 import ElementUI from "element-ui";
+
+
 import * as filter from './utils/filter';
 import {$message} from './utils/message';
-import "element-ui/lib/theme-chalk/index.css";
+// import "element-ui/lib/theme-chalk/index.css";
 import "./assets/iconfont/iconfont.css"
 import '@/styles/index.scss' // global css
 

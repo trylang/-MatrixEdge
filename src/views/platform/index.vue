@@ -9,7 +9,13 @@
         </div>
       </div>
     </div>
-    <el-upload
+
+    <div>
+      <input type='file' name="file" multiple webkitdirectory >
+      <button>upload44</button>
+    </div>
+
+    <!-- <el-upload
       class="import-btn"
       action="https://jsonplaceholder.typicode.com/posts/"
       :on-preview="handlePreview"
@@ -20,16 +26,19 @@
       :on-exceed="handleExceed"
       :file-list="fileList">
       <el-button type="primary">导入授权文件</el-button>
-      <!-- <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div> -->
-    </el-upload>
+    </el-upload> -->
+      <Drawer />
+
   </div>
 </template>
 
 <script>
 import Title from "@/components/Title.vue";
+import Drawer from "@/components/Drawer.vue";
 export default {
   components: {
-    Title
+    Title,
+    Drawer
   },
   data() {
     return {
