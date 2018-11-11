@@ -10,12 +10,12 @@
       </div>
     </div>
 
-    <div>
+    <!-- <div>
       <input type='file' name="file" multiple webkitdirectory >
       <button>upload44</button>
-    </div>
+    </div> -->
 
-    <!-- <el-upload
+    <el-upload
       class="import-btn"
       action="https://jsonplaceholder.typicode.com/posts/"
       :on-preview="handlePreview"
@@ -26,7 +26,7 @@
       :on-exceed="handleExceed"
       :file-list="fileList">
       <el-button type="primary">导入授权文件</el-button>
-    </el-upload> -->
+    </el-upload>
       <Drawer />
 
   </div>

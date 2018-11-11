@@ -13,7 +13,7 @@ import ElementUI from "element-ui";
 
 import * as filter from './utils/filter';
 import {$message} from './utils/message';
-// import "element-ui/lib/theme-chalk/index.css";
+import "element-ui/lib/theme-chalk/index.css"; // 设置主题时需要注释
 import "./assets/iconfont/iconfont.css"
 import '@/styles/index.scss' // global css
 

@@ -38,7 +38,7 @@
         </div>
       </div> 
 
-      <Table :header="nodeHeader" :content="nodeContent"></Table>
+      <Table :header="nodeHeader" :content="nodeContent" :ifClickTr="true"></Table>
     </el-row>
 
     <el-dialog

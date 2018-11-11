@@ -12,44 +12,66 @@
           </th>
 				</tr>
 			</thead>
-			<tbody class="table_body">
-				<tr v-for="(content,index) in content" :key="index">
-          <td v-for="(header,key) in header" :key="key">
-            <div class="cell">
-              <span v-if="header.type==='text'">{{content[header.name]}}</span>
-              <span v-if="header.type==='time'">{{content[header.name]|formatDate(header.filter)}}</span>
-              <input v-if="header.type==='checkbox'" type="checkbox" :id="index" v-model="content[header.name]">
-              <label v-if="header.type==='checkbox'" :for="index"></label>
-              <div v-if="header.type==='buttons'">
-                <div class="btn-item" v-for="(operation, index) in header.operations" :key="index">
-                  <a href="#" class="btn_text" v-if="operation.type=='link'" :class="operation.class" 
-                    :style="operation.style" 
-                    @click.stop.prevent="operation.click(content, content)" 
-                    >{{operation.label}}</a>
-                  <el-button v-if="operation.type=='btn'" size="mini" :class="operation.class" 
-                    :style="operation.style" @click.stop.prevent="operation.click(content, content)" 
-                    :type="operation.btntype">{{operation.label}}</el-button>
-                  <el-dropdown v-if="operation.type=='dropdown'" @command="operation.handleCommand" trigger="click">
-                    <span class="el-dropdown-link">
-                      {{operation.label}}<i class="el-icon-arrow-down el-icon--right"></i>
-                    </span>
-                    <el-dropdown-menu slot="dropdown">
-                      <el-dropdown-item v-for="(drop, dropItem) in operation.options" :key="dropItem" :command="drop.command">{{drop.label}}</el-dropdown-item>
-                    </el-dropdown-menu>
-                  </el-dropdown>
 
-                </div>
-                  
-              </div>                       
-            </div>
-          </td>
-				</tr>
+			<tbody class="table_body">
+        
+        <template v-for="(content,index) in content">
+          <tr :class="{clickTr: ifClickTr}" @click="ifClickTr?handlerTr(content, index, true):'' ">
+            <td v-for="(header,key) in header" :key="key">
+              <div class="cell">
+                <span v-if="header.type==='text'">{{content[header.name]}}</span>
+                <span v-if="header.type==='time'">{{content[header.name]|formatDate(header.filter)}}</span>
+                <input v-if="header.type==='checkbox'" type="checkbox" :id="index" v-model="content[header.name]">
+                <label v-if="header.type==='checkbox'" :for="index"></label>
+                <div v-if="header.type==='buttons'">
+                  <div class="btn-item" v-for="(operation, index) in header.operations" :key="index">
+                    <a href="#" class="btn_text" v-if="operation.type=='link'" :class="operation.class" 
+                      :style="operation.style" 
+                      @click.stop.prevent="operation.click(content, content)" 
+                      >{{operation.label}}</a>
+                    <el-button v-if="operation.type=='btn'" size="mini" :class="operation.class" 
+                      :style="operation.style" @click.stop.prevent="operation.click(content, content)" 
+                      :type="operation.btntype">{{operation.label}}</el-button>
+                    <el-dropdown v-if="operation.type=='dropdown'" @command="operation.handleCommand" trigger="click">
+                      <span class="el-dropdown-link">
+                        {{operation.label}}<i class="el-icon-arrow-down el-icon--right"></i>
+                      </span>
+                      <el-dropdown-menu slot="dropdown">
+                        <el-dropdown-item v-for="(drop, dropItem) in operation.options" :key="dropItem" :command="drop.command">{{drop.label}}</el-dropdown-item>
+                      </el-dropdown-menu>
+                    </el-dropdown>
+
+                  </div>
+                    
+                </div>                       
+              </div>
+            </td>
+          </tr>
+
+          <transition
+            name="custom-classes-transition"
+            enter-active-class="animated bounceInRight"
+            leave-active-class="animated bounceOutRight">
+            <tr v-if="trShow[index]">
+              <span @click.stop.prevent="handlerTr(content, index, false)"><i class="el-icon-close"></i></span>
+              <slot>
+                <div style="height: 200px; border: 1px solid red;">frfrfrfr</div>
+              </slot>
+            </tr>
+            
+          </transition>
+
+          
+        </template>
+        
         <tr v-if="content.length<1" class="table_empty-block">
           <td colspan="7" class="table_empty-text">暂无数据</td>
         </tr>
+
 			</tbody>
       
 	  </table>
+
     <div v-if="!noPage && content.length>0" class="table_page">
       <el-pagination
         @size-change="handleSizeChange"
@@ -68,10 +90,11 @@
 <script>
 export default {
   name: "Table",
-  props: ["header", "content", "noPage"],
+  props: ["header", "content", "noPage", "ifClickTr"],
   data() {
     return {
-      currentPage: 1
+      currentPage: 1,
+      trShow: Array(this.content.length)
     }
   },
   computed: {
@@ -107,6 +130,9 @@ export default {
     },
     handleCurrentChange(val) {
       console.log(`当前页: ${val}`);
+    },
+    handlerTr(content, index, flag) {
+      this.trShow.splice(index, 1, flag);
     }
   }
 };
@@ -186,5 +212,8 @@ export default {
 .table_page {
   display: flex;
   justify-content: center;
+}
+.clickTr {
+  cursor: pointer;
 }
 </style>

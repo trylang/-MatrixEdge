@@ -9,8 +9,8 @@
       text-color="#bfcbd9"
       active-text-color="#409EFF"
     >
-        <img v-if="!isCollapse" style="display: block; margin: 1rem auto 0;" width="40" height="30" :src="favicon" alt="">
-
+        <img :class="{transparent: isCollapse}" style="display: block; margin: 1rem auto 0;" width="40" height="30" :src="favicon" alt="">
+        
       <sidebar-item v-for="route in routes" :key="route.name" :item="route" :base-path="route.path"></sidebar-item>
     </el-menu>
   </el-scrollbar>
@@ -38,3 +38,10 @@ export default {
   }
 };
 </script>
+
+<style>
+.transparent {
+  width: 0;
+}
+</style>
+

@@ -15,7 +15,7 @@ switch (domain) {
   case 'localhost':
     // base.baseURL = 'http://192.168.88.203:8000';
     // base.baseURL = '/api/'
-    base.baseURL = base.mock;
+    base.baseURL = base.baseURL;
     break
   default:
     break

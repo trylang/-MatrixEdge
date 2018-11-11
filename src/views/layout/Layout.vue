@@ -5,6 +5,14 @@
     <div class="main-container">
       <navbar></navbar>
       <app-main></app-main>
+      <div class="progress-content">
+				<span class="icon-down" @click="show = !show">
+					<i class="el-icon-arrow-down"></i>
+				</span>
+				<transition name="custom-classes-transition" enter-active-class="animated bounceInRight" leave-active-class="animated bounceOutRight">
+        	<Table v-if="show" :header="header" :content="content"></Table>
+				</transition>
+      </div>
     </div>
   </div>
 </template>
@@ -12,58 +20,114 @@
 <script>
 import { Navbar, Sidebar, AppMain } from "./components";
 import ResizeMixin from "./mixin/ResizeHandler";
+import Table from "@/components/Table.vue";
+import { header } from "./static.js";
 
 export default {
-    name: "layout",
-    components: {
-        Navbar,
-        Sidebar,
-        AppMain
-    },
-    mixins: [ResizeMixin],
-    computed: {
-        sidebar() {
-            return this.$store.state.app.sidebar;
+  name: "layout",
+  components: {
+    Navbar,
+    Sidebar,
+    AppMain,
+    Table
+  },
+  mixins: [ResizeMixin],
+  data() {
+    return {
+			show: true,
+      header,
+      content: [
+        {
+          name: "张三",
+          ip: "10.10.172.32",
+          option: "登录",
+          state: "成功",
+          time: "2018.10.22 09: 28: 03"
         },
-        device() {
-            return this.$store.state.app.device;
+        {
+          name: "李四",
+          ip: "10.10.199.32",
+          option: "提出",
+          state: "成功",
+          time: "2018.11.02 22: 28: 03"
         },
-        classObj() {
-            return {
-                hideSidebar: !this.sidebar.opened,
-                openSidebar: this.sidebar.opened,
-                withoutAnimation: this.sidebar.withoutAnimation,
-                mobile: this.device === "mobile"
-            };
+        {
+          name: "王玉",
+          ip: "10.10.173.90",
+          option: "创建项目空间",
+          state: "创建中",
+          time: "2018.11.12 09: 28: 03"
+        },
+        {
+          name: "哈哈",
+          ip: "10.10.182.32",
+          option: "登录",
+          state: "失败",
+          time: "2018.11.11 12: 28: 03"
         }
+      ]
+    };
+  },
+  computed: {
+    sidebar() {
+      return this.$store.state.app.sidebar;
     },
-    methods: {
-        handleClickOutside() {
-            this.$store.dispatch("CloseSideBar", { withoutAnimation: false });
-        }
+    device() {
+      return this.$store.state.app.device;
+    },
+    classObj() {
+      return {
+        hideSidebar: !this.sidebar.opened,
+        openSidebar: this.sidebar.opened,
+        withoutAnimation: this.sidebar.withoutAnimation,
+        mobile: this.device === "mobile"
+      };
     }
+  },
+  methods: {
+    handleClickOutside() {
+      this.$store.dispatch("CloseSideBar", { withoutAnimation: false });
+		},
+		dropDown() {
+
+		}
+  }
 };
 </script>
 
 <style rel="stylesheet/scss" lang="scss" scoped>
 @import "src/styles/mixin.scss";
 .app-wrapper {
-    @include clearfix;
-    position: relative;
-    height: 100%;
-    width: 100%;
-    &.mobile.openSidebar {
-        position: fixed;
-        top: 0;
-    }
+  @include clearfix;
+  position: relative;
+  height: 100%;
+  width: 100%;
+  &.mobile.openSidebar {
+    position: fixed;
+    top: 0;
+  }
 }
 .drawer-bg {
-    background: #000;
-    opacity: 0.3;
-    width: 100%;
-    top: 0;
-    height: 100%;
-    position: absolute;
-    z-index: 999;
+  background: #000;
+  opacity: 0.3;
+  width: 100%;
+  top: 0;
+  height: 100%;
+  position: absolute;
+  z-index: 999;
 }
+.progress-content {
+  position: relative;
+  background: #fff;
+  padding: 16px 16px 0;
+  margin-bottom: 32px;
+}
+.icon-down {
+  position: absolute;
+  right: 36px;
+  top: 50px;
+	color: #999;
+	cursor: pointer;
+}
+
 </style>

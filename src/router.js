@@ -15,7 +15,7 @@ export const constantRouterMap = [
         component: Layout,
         redirect: '/dashboard',
         name: 'Dashboard',
-        // hidden: true,
+        hidden: false,
         meta: { title: '概览', icon: 'icon-shezhitianchong' },
         children: [{
             path: 'dashboard',
@@ -31,11 +31,29 @@ export const constantRouterMap = [
         name: 'resource_home',
         meta: { title: '资源管理', icon: 'icon-fenleiorguangchangorqitatianchong' },
         children: [
+            // {
+            //     path: 'index',
+            //     name: 'resource_index',
+            //     component: () => import('@/views/resource/index'),
+            //     meta: { title: '概览', icon: 'icon-fenleiorguangchangorqitatianchong' }
+            // },
             {
-                path: 'index',
-                name: 'resource_index',
-                component: () => import('@/views/resource/index'),
-                meta: { title: '概览', icon: 'icon-fenleiorguangchangorqitatianchong' }
+                path: 'store',
+                name: 'resource_store',
+                component: () => import('@/views/resource/store'),
+                meta: { title: '存储', icon: 'icon-fenleiorguangchangorqitatianchong' }
+            },
+            {
+                path: 'quota',
+                name: 'resource_quota',
+                component: () => import('@/views/resource/quota'),
+                meta: { title: '配额规格', icon: 'icon-fenleiorguangchangorqitatianchong' }
+            },
+            {
+                path: 'mirror',
+                name: 'resource_mirror',
+                component: () => import('@/views/resource/mirror'),
+                meta: { title: '配额规格', icon: 'icon-fenleiorguangchangorqitatianchong' }
             },
             {
                 path: 'node',
@@ -46,40 +64,60 @@ export const constantRouterMap = [
             
         ]
     },
-
     {
-        path: '/AI',
+        path: '/project',
         component: Layout,
-        redirect: '/AI/index',
-        name: 'AI_home',
-        meta: { title: 'AI实验室', icon: 'icon-yibantishi' },
+        redirect: '/project/index',
+        name: 'project_home',
+        meta: { title: '项目中心', icon: 'icon-yibantishi' },
         children: [
             {
                 path: 'index',
-                name: 'AI_index',
-                component: () => import('@/views/AI/index'),
-                meta: { title: 'AI实验室', icon: 'icon-yibantishi' }
-            },
-            {
-                path: 'info',
-                name: 'AI_info',
-                hidden: true,
-                component: () => import('@/views/AI/info'),
-                meta: { title: '实验室信息', icon: 'icon-xinfengtianchong' },
+                name: 'project_index',
+                component: () => import('@/views/project/index'),
+                meta: { title: '项目空间', icon: 'icon-yibantishi' }
             }
         ]
     },
+    // {
+    //     path: '/AI',
+    //     component: Layout,
+    //     redirect: '/AI/index',
+    //     name: 'AI_home',
+    //     meta: { title: 'AI实验室', icon: 'icon-yibantishi' },
+    //     children: [
+    //         {
+    //             path: 'index',
+    //             name: 'AI_index',
+    //             component: () => import('@/views/AI/index'),
+    //             meta: { title: 'AI实验室', icon: 'icon-yibantishi' }
+    //         },
+    //         {
+    //             path: 'info',
+    //             name: 'AI_info',
+    //             hidden: true,
+    //             component: () => import('@/views/AI/info'),
+    //             meta: { title: '实验室信息', icon: 'icon-xinfengtianchong' },
+    //         }
+    //     ]
+    // },
     {
         path: '/practice',
         component: Layout,
         redirect: '/practice/index',
-        meta: { title: '训练管理', icon: 'icon-fasongxinxitianchong' },
+        meta: { title: '训练中心', icon: 'icon-fasongxinxitianchong' },
         children: [
             {
                 path: 'index',
                 name: 'practice_index',
                 component: () => import('@/views/practice/index'),
-                meta: { title: '训练管理', icon: 'icon-chahuafeitianchong' }
+                meta: { title: '训练', icon: 'icon-chahuafeitianchong' }
+            },
+            {
+                path: 'template',
+                name: 'practice_template',
+                component: () => import('@/views/practice/template'),
+                meta: { title: '训练模版', icon: 'icon-chahuafeitianchong' }
             },
             {
                 path: '/practice/create',
@@ -104,12 +142,12 @@ export const constantRouterMap = [
                 component: () => import('@/views/user/index'),
                 meta: { title: '用户信息', icon: 'icon-yonghutianchong' }
             },
-            {
-                path: 'log',
-                name: 'user_log',
-                component: () => import('@/views/user/log'),
-                meta: { title: '用户日志', icon: 'icon-yonghutianchong' }
-            },
+            // {
+            //     path: 'log',
+            //     name: 'user_log',
+            //     component: () => import('@/views/user/log'),
+            //     meta: { title: '用户日志', icon: 'icon-yonghutianchong' }
+            // },
             {
                 path: 'editUser',
                 name: 'account_user',
@@ -128,17 +166,49 @@ export const constantRouterMap = [
     },
 
     {
-        path: '/platform',
+        path: '/alert',
         component: Layout,
+        redirect: '/alert/index',
+        name: 'alert_home',
+        meta: { title: '告警管理', icon: 'icon-yonghutianchong' },
         children: [
             {
                 path: 'index',
-                name: 'platform_index',
-                component: () => import('@/views/platform/index'),
-                meta: { title: '平台信息', icon: 'icon-bangzhu' }
+                name: 'alert_index',
+                component: () => import('@/views/alert/index'),
+                meta: { title: '告警', icon: 'icon-yonghutianchong' }
             }
         ]
     },
+
+    {
+        path: '/log',
+        component: Layout,
+        redirect: '/user/log',
+        name: 'user_log',
+        meta: { title: '日志管理', icon: 'icon-yonghutianchong' },
+        children: [
+            {
+                path: 'log',
+                name: 'log_index',
+                component: () => import('@/views/user/log'),
+                meta: { title: '日志', icon: 'icon-yonghutianchong' }
+            }
+        ]
+    },
+
+    // {
+    //     path: '/platform',
+    //     component: Layout,
+    //     children: [
+    //         {
+    //             path: 'index',
+    //             name: 'platform_index',
+    //             component: () => import('@/views/platform/index'),
+    //             meta: { title: '平台信息', icon: 'icon-bangzhu' }
+    //         }
+    //     ]
+    // },
 
     // 数据科学家首次登录页
     {

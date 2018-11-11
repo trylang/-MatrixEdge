@@ -7,6 +7,7 @@
     <el-row class="progress-content">
       <div class="progress-item" v-for="(item, index) in progressList" :key="index">
         <h5>{{item.label}}</h5>
+        <h3>{{item.percent}}</h3>
         <el-progress type="circle" :percentage="item.percent" :color="item.color"></el-progress>
         <p>{{item.value}}</p>
       </div>
@@ -92,7 +93,7 @@ export default {
   },
   data() {
     return {
-      overData: {},
+      overData: {cpu: null, gpu: null, node: null, memory: null, storage: null},
       lineChartData: lineChartData.newVisitis
     };
   },
@@ -106,31 +107,31 @@ export default {
       return [
         {
           label: "节点在线率",
-          percent: parseInt(node.rate * 100),
+          percent: parseInt(node.rate),
           color: "#5dbf99",
           value: `总数量(台)：${node.total}`
         },
         {
           label: "CPU使用率",
-          percent: parseInt(cpu.usage * 100),
+          percent: parseInt(cpu.usage),
           color: "#8e71c7",
           value: `总数量(个)：${cpu.capacity}`
         },
         {
           label: "GPU使用率",
-          percent: parseInt(gpu.usage * 100),
+          percent: parseInt(gpu.usage/ 10),
           color: "#fb5130",
           value: `总数量(个)：${gpu.capacity}`
         },
         {
           label: "内存使用率",
-          percent: parseInt(memory.usage * 100),
+          percent: parseInt(memory.usage),
           color: "#8e71c7",
           value: `总数量(G)：${memory.capacity}`
         },
         {
           label: "存储使用率",
-          percent: parseInt(storage.usage * 100),
+          percent: parseInt(storage.usage),
           color: "#5dbf99",
           value: `总数量(G)：${storage.capacity}`
         }
