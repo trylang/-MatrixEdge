@@ -1,5 +1,5 @@
 
-import  {checkEmail, checkPhone} from '@/utils/validate'
+import { checkEmail, checkPhone } from '@/utils/validate'
 export const logHeader = [{
   label: "账号",
   type: "text",
@@ -31,31 +31,31 @@ export const userHeader = [{
   label: "",
   name: "state",
   type: "checkbox"
-},{
+}, {
   label: "账号",
   type: "text",
   name: "username"
-},{
+}, {
   label: "姓名",
   type: "text",
   name: "name"
-},{
+}, {
   label: "手机号",
   type: "text",
   name: "phone"
-},{
+}, {
   label: "邮箱",
   type: "text",
   name: "email"
-},{
+}, {
   label: "单位（部门）",
   type: "text",
   name: "department"
-},{
+}, {
   label: "资源配置/使用率",
   type: "text",
   name: "name"
-},{
+}, {
   label: "创建时间",
   name: "created_at",
   type: "time",
@@ -96,7 +96,7 @@ export const userDialog = {
     name: 'department',
     type: 'text',
     placeholder: '请填写单位（部门）全称'
-  },  {
+  }, {
     label: '',
     type: 'title',
     title: '配额'

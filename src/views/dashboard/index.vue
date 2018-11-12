@@ -6,15 +6,16 @@
 
 <script>
 import { mapGetters } from 'vuex'
+import newAdmin from './newAdmin'
 import adminDashboard from './admin'
 import scientistDashboard from './scientist'
 
 export default {
   name: 'Dashboard',
-  components: { adminDashboard, scientistDashboard },
+  components: { adminDashboard, scientistDashboard, newAdmin },
   data() {
     return {
-      currentRole: 'adminDashboard'
+      currentRole: 'newAdmin'
     }
   },
   computed: {

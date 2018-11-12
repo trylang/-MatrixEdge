@@ -14,7 +14,6 @@
 			</thead>
 
 			<tbody class="table_body">
-        
         <template v-for="(content,index) in content">
           <tr :class="{clickTr: ifClickTr}" @click="ifClickTr?handlerTr(content, index, true):'' ">
             <td v-for="(header,key) in header" :key="key">
@@ -55,13 +54,13 @@
             <tr v-if="trShow[index]">
               <span @click.stop.prevent="handlerTr(content, index, false)"><i class="el-icon-close"></i></span>
               <slot>
-                <div style="height: 200px; border: 1px solid red;">frfrfrfr</div>
+                <div style="height: 200px; border: 1px solid red;">frfrfrfr
+                </div>
               </slot>
             </tr>
             
           </transition>
-
-          
+  
         </template>
         
         <tr v-if="content.length<1" class="table_empty-block">
@@ -71,7 +70,6 @@
 			</tbody>
       
 	  </table>
-
     <div v-if="!noPage && content.length>0" class="table_page">
       <el-pagination
         @size-change="handleSizeChange"
@@ -84,13 +82,17 @@
     </div>
 	</div>
 	
-	
+
 </template>
 
 <script>
+import Vue from 'vue/dist/vue.js'
+import TableChart from '@/components/TableChart';
+
 export default {
   name: "Table",
   props: ["header", "content", "noPage", "ifClickTr"],
+  components: {TableChart},
   data() {
     return {
       currentPage: 1,
@@ -131,7 +133,7 @@ export default {
     handleCurrentChange(val) {
       console.log(`当前页: ${val}`);
     },
-    handlerTr(content, index, flag) {
+    handlerTr(content, index, flag) {    
       this.trShow.splice(index, 1, flag);
     }
   }

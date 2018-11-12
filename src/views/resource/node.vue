@@ -194,6 +194,7 @@ export default {
         standard: 'E5-2650v4 *2,P100 *2,MEN 256G',
         state: '在线',
         gpu: '是',
+        components: `<el-button type="primary">默认按钮</el-button>`,
         update_time: new Date()
       }, {
         name: 'NODE-2',
@@ -202,6 +203,7 @@ export default {
         standard: 'E5-2650v4 *2,P100 *2,MEN 256G',
         state: '在线',
         gpu: '是',
+        components: `<el-button type="primary">默认按钮1</el-button>`,
         update_time: new Date()
       }, {
         name: 'NODE-3',
@@ -210,6 +212,7 @@ export default {
         standard: 'E5-2650v4 *2,P100 *2,MEN 256G',
         state: '在线',
         gpu: '是',
+        components: `<el-button type="primary">默认按钮2</el-button>`,
         update_time: new Date()
       }, {
         name: 'NODE-4',
@@ -218,6 +221,7 @@ export default {
         standard: 'E5-2650v4 *2,P100 *2,MEN 256G',
         state: '在线',
         gpu: '是',
+        components: `<el-button type="primary">默认按钮3</el-button>`,
         update_time: new Date()
       }],
       detail: {

@@ -7,10 +7,10 @@
       <app-main></app-main>
       <div class="progress-content">
 				<span class="icon-down" @click="show = !show">
-					<i class="el-icon-arrow-down"></i>
+					<i class="el-icon-news"></i>
 				</span>
 				<transition name="custom-classes-transition" enter-active-class="animated bounceInRight" leave-active-class="animated bounceOutRight">
-        	<Table v-if="show" :header="header" :content="content"></Table>
+        	<Table class="table" v-if="show" :header="header" :content="content"></Table>        
 				</transition>
       </div>
     </div>
@@ -34,7 +34,7 @@ export default {
   mixins: [ResizeMixin],
   data() {
     return {
-			show: true,
+			show: false,
       header,
       content: [
         {
@@ -117,17 +117,22 @@ export default {
   z-index: 999;
 }
 .progress-content {
-  position: relative;
-  background: #fff;
+  width: 100%;
+  position: fixed;
+  bottom: 0;
+  z-index: 1;
   padding: 16px 16px 0;
-  margin-bottom: 32px;
+  .table {
+    background: #fff;
+  }
 }
 .icon-down {
-  position: absolute;
-  right: 36px;
-  top: 50px;
-	color: #999;
-	cursor: pointer;
+  position: fixed;
+  top: 45rem;
+  right: 3rem;
+  font-size: 36px;
+  color: #999;
+  cursor: pointer;
 }
 
 </style>

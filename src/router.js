@@ -53,7 +53,7 @@ export const constantRouterMap = [
                 path: 'mirror',
                 name: 'resource_mirror',
                 component: () => import('@/views/resource/mirror'),
-                meta: { title: '配额规格', icon: 'icon-fenleiorguangchangorqitatianchong' }
+                meta: { title: '镜像', icon: 'icon-fenleiorguangchangorqitatianchong' }
             },
             {
                 path: 'node',
@@ -184,12 +184,12 @@ export const constantRouterMap = [
     {
         path: '/log',
         component: Layout,
-        redirect: '/user/log',
+        redirect: '/log/index',
         name: 'user_log',
         meta: { title: '日志管理', icon: 'icon-yonghutianchong' },
         children: [
             {
-                path: 'log',
+                path: 'index',
                 name: 'log_index',
                 component: () => import('@/views/user/log'),
                 meta: { title: '日志', icon: 'icon-yonghutianchong' }

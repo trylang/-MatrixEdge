@@ -2,28 +2,36 @@
   <el-menu class="navbar" mode="horizontal">
     <hamburger class="hamburger-container" :toggleClick="toggleSideBar" :isActive="sidebar.opened"></hamburger>
     <breadcrumb></breadcrumb>
-    <el-dropdown class="avatar-container" trigger="click">
-      <div class="avatar-wrapper">
-        <!-- <img class="user-avatar" :src="avatar+'?imageView2/1/w/80/h/80'"> -->
-        <img class="user-avatar" :src="userImg">
-        <i class="el-icon-caret-bottom"></i>
-      </div>
-      <el-dropdown-menu class="user-dropdown" slot="dropdown">
-        <router-link class="inlineBlock" to="/user/editUser">
-          <el-dropdown-item>
-            修改账户
+
+    <div class="avatar-container">
+      <router-link class="link" to="/alert/index"><i class="el-icon-bell"></i></router-link>
+      <router-link class="link" to="/log/index"><i class="el-icon-question"></i></router-link>
+         
+      <el-dropdown trigger="click">
+        <div class="avatar-wrapper">
+          <!-- <img class="user-avatar" :src="avatar+'?imageView2/1/w/80/h/80'"> -->
+          <img class="user-avatar" :src="userImg">
+          <span style="color: #eee; font-size: 16px; margin-left: .5rem;vertical-align:top;">admin</span>
+          <i class="el-icon-caret-bottom"></i>
+        </div>
+        <el-dropdown-menu class="user-dropdown" slot="dropdown">
+          <router-link class="inlineBlock" to="/user/editUser">
+            <el-dropdown-item>
+              修改账户
+            </el-dropdown-item>
+          </router-link>
+          <router-link class="inlineBlock" to="/user/editPsd">
+            <el-dropdown-item>
+              修改密码
+            </el-dropdown-item>
+          </router-link>
+          <el-dropdown-item divided>
+            <span @click="logout" style="display:block;">登出</span>
           </el-dropdown-item>
-        </router-link>
-        <router-link class="inlineBlock" to="/user/editPsd">
-          <el-dropdown-item>
-            修改密码
-          </el-dropdown-item>
-        </router-link>
-        <el-dropdown-item divided>
-          <span @click="logout" style="display:block;">登出</span>
-        </el-dropdown-item>
-      </el-dropdown-menu>
-    </el-dropdown>
+        </el-dropdown-menu>
+      </el-dropdown>
+    </div>
+    
   </el-menu>
 </template>
 
@@ -102,6 +110,16 @@ export default {
         font-size: 12px;
       }
     }
+  }
+  .link {
+    display: table-cell;
+    vertical-align: top;
+    color: #fff;
+    font-size: 20px;
+    width: 50px;
+  }
+  .el-dropdown {
+    display: table-cell;
   }
 }
 </style>
